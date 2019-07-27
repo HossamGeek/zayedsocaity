@@ -1,4 +1,4 @@
-import {sequelize,DataTypes} from '../../config/DB.config'
+import {sequelize,DataTypes} from '../../../config/DB.config'
 const evaluationModel =   sequelize.define('evaluation',{
     id:{
         field:'evaluation_id',

@@ -1,4 +1,4 @@
-import evaluationModel from '../models/evaluation.mdl';
+import evaluationModel from '../models/evaluation/evaluation.mdl';
 import createService from '../services/create.service';
 import findAllService from '../services/view.service';
 
