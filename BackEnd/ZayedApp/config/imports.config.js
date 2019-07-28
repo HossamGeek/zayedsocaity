@@ -5,9 +5,13 @@ import cors from 'cors';
 import generator from 'generate-password'; 
 import uniqId from 'uniqid';
 import macAddress from 'macaddress';
+import bcrypt from 'bcryptjs';
+import Joi from '@hapi/joi';
 
+const salt = bcrypt.genSaltSync(10);
+export const hashPassword = password => bcrypt.hashSync(password, salt);
+export const passwordCompare = (password,hash) => bcrypt.compareSync(password, hash); 
 export const mac_address = () => macAddress.one( (err, mac) =>mac);
-
 export const generatePassword = generator.generate({
     length: 80,
     numbers: true,
@@ -16,4 +20,4 @@ export const generatePassword = generator.generate({
 
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId}
+export {express,bodyParser,logger,cors,uniqId,Joi}

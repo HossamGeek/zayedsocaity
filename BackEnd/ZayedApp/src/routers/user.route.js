@@ -1,12 +1,11 @@
 import {midParse,express} from '../../config/imports.config';
-import usrMidWr from '../middleware/user.midWr';
-import usrCtrl from '../controllers/user.ctrl';
+import registerMidWr from '../middleware/register.midWr';
+import registerCtrl from '../controllers/register.ctrl';
 const usrRouter = express.Router();
 
 
-usrRouter.route('')
-.post(midParse,usrMidWr.configUserData,usrCtrl.create)
-.get(usrCtrl.view);
+usrRouter.post('/register',midParse,registerMidWr.configUserData,registerCtrl.create);
+
 
 
 module.exports = usrRouter;

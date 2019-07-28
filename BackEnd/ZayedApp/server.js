@@ -3,7 +3,7 @@ import appConfig from './config/app.config';
 
 const app = express(),
      http = require('http').Server(app),
-     port = 8000;
+     port = 3333;
 
 appConfig(app);
 

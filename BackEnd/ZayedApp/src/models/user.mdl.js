@@ -57,6 +57,10 @@ const userModel =   sequelize.define('user',{
         allowNull: false,
         defaultValue: DataTypes.NOW
       },
+      birthday: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       location_id: {
         type: DataTypes.STRING,
         references: {
