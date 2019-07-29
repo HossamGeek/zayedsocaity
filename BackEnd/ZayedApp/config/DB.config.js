@@ -25,9 +25,9 @@ if (process.env.NODE_ENV === 'production')    {
 const DataTypes = Sequelize;
 
 sequelize.authenticate().then(()=>{
-    console.log('Database is connection');
+    console.log('Database connected');
 }).catch(err=>{
-    console.log("can't connection Database cause of " + err );
+    console.log("can't connect to Database cause of " + err );
 })
 
 

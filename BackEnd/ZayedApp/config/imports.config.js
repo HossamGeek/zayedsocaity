@@ -10,21 +10,28 @@ import Joi from '@hapi/joi';
 import dotenv from  'dotenv';
 import Sequelize from 'sequelize';
 import jwt from 'jsonwebtoken';
+import randomCode from 'randomstring';
+import nodemailer from 'nodemailer';
+
 
 dotenv.config();
 const salt = bcrypt.genSaltSync(10);
 
-
+export const passwordRegex = /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!&$@%&? "]).*$/;
 export const hashPassword = password => bcrypt.hashSync(password, salt);
 export const passwordCompare = (password,hash) => bcrypt.compareSync(password, hash); 
 export const mac_address = () => macAddress.one( (err, mac) =>mac);
-export const generatePassword = generator.generate({
+export const generatePassword = () => generator.generate({
     length: 80,
     numbers: true,
     uppercase: true,
     symbols:true,
 
 });
+export const generateCode = () => randomCode.generate({
+    length: 7,
+    charset: 'numeric'
+});
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId,Joi,Sequelize,jwt}
+export {express,bodyParser,logger,cors,uniqId,Joi,Sequelize,jwt,nodemailer}
 

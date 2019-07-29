@@ -58,6 +58,7 @@ const userModel =   sequelize.define('user',{
         defaultValue: DataTypes.NOW
       },
       birthday: {
+        field:'birthday',
         type: DataTypes.DATE,
         allowNull: false,
       },
@@ -77,6 +78,17 @@ const userModel =   sequelize.define('user',{
                 key: 'role_id',
             },
       },  
+      approved:{
+        field:'approved',
+        type:DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false 
+      } ,
+      generate_code: {
+        field:'generate_code',
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
 
   }, {
       tableName: 'user',
