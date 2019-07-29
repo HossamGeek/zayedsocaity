@@ -17,39 +17,42 @@ const user = {
     fname:'',
     lname:'',
     generate_code:'',
-    type:'',
 };
 
+let typeConfig = {
+    type:'',
+    content:'',
+    subject:''
+}
+
 const letter = {
-    subject:'',
     header : (fname,lname)=>  '<p> Hello <strong>'+ capName(fname) +' '+ capName(lname) +
             '</strong> from <strong>'+ server.user +'</strong>,</p>' + '\n' ,
-    content:'',
     footer:'<p> If you have any follow-up questions or concerns, '+
     'please contact us anytime at '+ server.email +'.</p>'+
     '<p> Best regards, </p>'+'<p><strong>'+server.user+'</strong></p>'
 }
 
 
-const typeConfig = () => {
-    if(user.type == 'password' ) {
-        letter.content = 'click the following link';
-        letter.subject = 'Reset Password';
+const selectTypeConfig = () => {
+    if(typeConfig.type == 'resetPassword' ) {
+        typeConfig.content = 'click the following link';
+        typeConfig.subject = 'Reset Password';
     }
-    else if(user.type == 'email'){
-        letter.content = '<p>We recently received your request to verification for your email '+
+    else if(typeConfig.type == 'register'){
+        typeConfig.content = '<p>We recently received your request to verification for your email '+
                             user.email + '  </p> <p>Your Generate Code is <strong>' + 
                             user.generate_code +' </strong></p>';
-        letter.subject = 'User Verification';           
+        typeConfig.subject = 'User Verification';           
     }
 }
 const mailOption = () =>{
-    typeConfig();
+    selectTypeConfig();
     return {
         from: server.user +' <' +server.email + '>', // sender address
         to:user.email, // list of receivers or one receive
-        subject: letter.subject, // Subject line
-        html: letter.header(user.fname,user.lname) + letter.content + letter.footer
+        subject: typeConfig.subject, // Subject line
+        html: letter.header(user.fname,user.lname) + typeConfig.content + letter.footer
     }
 }
 
@@ -66,12 +69,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-export const sendMail = async (data) =>  {
+export const sendMail = async (data,config) =>  {
 
     if(!data || !data['email'])
          return {data:'email not found',success:false};
     else 
      {
         Object.keys(user).map(k=>user[k] = data[k]);
+        Object.keys(typeConfig).map(k=>typeConfig[k] = config[k]);
         return transporter.sendMail(mailOption())}
 };

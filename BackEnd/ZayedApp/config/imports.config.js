@@ -6,7 +6,8 @@ import generator from 'generate-password';
 import uniqId from 'uniqid';
 import macAddress from 'macaddress';
 import bcrypt from 'bcryptjs';
-import Joi from '@hapi/joi';
+import BaseJoi from '@hapi/joi';
+import Extension from '@hapi/joi-date';
 import dotenv from  'dotenv';
 import Sequelize from 'sequelize';
 import jwt from 'jsonwebtoken';
@@ -14,9 +15,11 @@ import randomCode from 'randomstring';
 import nodemailer from 'nodemailer';
 
 
+
 dotenv.config();
 const salt = bcrypt.genSaltSync(10);
 
+export const Joi = BaseJoi.extend(Extension);
 export const passwordRegex = /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!&$@%&? "]).*$/;
 export const hashPassword = password => bcrypt.hashSync(password, salt);
 export const passwordCompare = (password,hash) => bcrypt.compareSync(password, hash); 
@@ -33,5 +36,5 @@ export const generateCode = () => randomCode.generate({
     charset: 'numeric'
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId,Joi,Sequelize,jwt,nodemailer}
+export {express,bodyParser,logger,cors,uniqId,Sequelize,jwt,nodemailer}
 

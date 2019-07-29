@@ -1,4 +1,6 @@
-import usrRouter from './user.route';
+import registerRouter from './register.route';
+import loginRouter from './login.route';
+
 import locationRouter from './location.route';
 import roleRouter from './role.route';
 import statusRouter from './status.route';
@@ -7,7 +9,9 @@ import evaluationRouter from './evaluation.route';
 
 
 const Router = app => {
-    app.use('/usr',usrRouter);
+    app.use('/register',registerRouter);
+    app.use('/login',loginRouter);
+
     app.use('/location',locationRouter);
     app.use('/role',roleRouter);
     app.use('/status',statusRouter);

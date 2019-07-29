@@ -3,9 +3,9 @@ import {mac_address,uniqId,hashPassword,Joi,passwordRegex,generateCode} from '..
 const usrSchemaValidation = {
     username: Joi.string().alphanum().min(3).max(30).required(),
     password: Joi.string().regex(passwordRegex).required(),
-    birthday: Joi.string().required(),
-    fname:Joi.string().regex(/^[a-zA-Z]{3,30}$/).trim(),
-    lname:Joi.string().regex(/^[a-zA-Z]{3,30}$/).trim(),
+    birthday: Joi.date().format('YYYY-MM-DD').required(),
+    fname:Joi.string().regex(/^[a-zA-Z]{3,30}$/).trim().required(),
+    lname:Joi.string().regex(/^[a-zA-Z]{3,30}$/).trim().required(),
     email:Joi.string().email().required(),
     phone:Joi.string().regex(/^[0-9]{3,30}$/),
     location_id:Joi.string().required(),
@@ -32,11 +32,11 @@ const errMsg = {
     password : "Passwords will contain at least 6 characters in length and "+
     "least 1 upper and 1 lower case letter and least 1 number" + 
     " and least given special characters (!$%&?@)",
-    name : "fname or lname must contain at least 3 characters "+
+    name : "fname and lname are required and must contain at least 3 characters "+
     "and lowercase"
 };
 
-const usrMidWr = {
+const registerMidWr = {
     configUserData : (req,res,next)=>{
         let usrBdy = req.body;
         let haveErr = usrIsValid(usrBdy)['error'];
@@ -50,9 +50,9 @@ const usrMidWr = {
                 res.json({data: errMsg.password,success:false})
             else if( path == 'fname' || path == 'lname')
                 res.json({data:errMsg.name,success:false})   
-            else res.json({data:haveErr['details'][0]['message'],success:false});
+            else res.json({data:details['message'],success:false});
         }   
     }
 };
 
-export default usrMidWr;
+export default registerMidWr;

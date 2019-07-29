@@ -1,6 +1,6 @@
 import userModel from '../models/user.mdl';
 import createService from '../services/create.service';
-import { jwtSign, jwtVerify } from '../services/jwt.service';
+import { jwtSign } from '../services/jwt.service';
 import { sendMail } from '../services/mailer.service';
 
 let tokenId ;
@@ -10,6 +10,7 @@ let usrBasicInform = {
     lname:"",
     email:"",
     username:"",
+    approved:""
     };
 let usrSecureInform = {
     id:"",
@@ -32,8 +33,7 @@ const registerCtrl = {
     create : (req,res)=>{
         createService(userModel,req.body)
         .then(result=>{
-            result['type'] = 'email';
-            sendMail(result);
+            sendMail(result,{type:"register"});
             res.json(ConfigResponseUsrData(result));
         })
         .catch(err=> res.json(errMsg(err)))
