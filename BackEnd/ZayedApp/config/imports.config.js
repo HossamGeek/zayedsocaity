@@ -7,8 +7,13 @@ import uniqId from 'uniqid';
 import macAddress from 'macaddress';
 import bcrypt from 'bcryptjs';
 import Joi from '@hapi/joi';
+import dotenv from  'dotenv';
+import Sequelize from 'sequelize';
 
+dotenv.config();
 const salt = bcrypt.genSaltSync(10);
+
+
 export const hashPassword = password => bcrypt.hashSync(password, salt);
 export const passwordCompare = (password,hash) => bcrypt.compareSync(password, hash); 
 export const mac_address = () => macAddress.one( (err, mac) =>mac);
@@ -20,4 +25,5 @@ export const generatePassword = generator.generate({
 
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId,Joi}
+export {express,bodyParser,logger,cors,uniqId,Joi,dotenv,Sequelize}
+

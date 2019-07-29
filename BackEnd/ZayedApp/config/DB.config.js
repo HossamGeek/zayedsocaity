@@ -1,25 +1,31 @@
-import Sequelize from 'sequelize';
-const DBName = "";
-const root = '';
-const pass = '';
+import {Sequelize} from './imports.config';
 
-const sequelize = new Sequelize(DBName,root,pass,{
-    define: {
-        charset: 'utf8',
-        collate: 'utf8_general_ci', 
-        timestamps: true
-      },
-     
-    host: 'localhost',
-    port: 3306,
-    dialect: 'mysql',
-    logging: false
-});
+let sequelize;
+const env = process.env;
+
+
+if (process.env.NODE_ENV === 'production')    {
+        sequelize = "";
+    } else {
+        sequelize = new Sequelize(env.dbName,env.dbUsername,env.dbPass,
+            {
+                    define: {
+                    charset: 'utf8',
+                    collate: 'utf8_general_ci', 
+                    timestamps: true
+                    },
+                
+                    host: env.dbHost,
+                    port:env.dbPort,
+                    dialect: 'mysql',
+                    logging: false  
+            });
+        }
+
 const DataTypes = Sequelize;
 
 sequelize.authenticate().then(()=>{
     console.log('Database is connection');
-    
 }).catch(err=>{
     console.log("can't connection Database cause of " + err );
 })

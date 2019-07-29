@@ -5,6 +5,7 @@ import statusRouter from './status.route';
 import reportRouter from './report.route';
 import evaluationRouter from './evaluation.route';
 
+
 const Router = app => {
     app.use('/usr',usrRouter);
     app.use('/location',locationRouter);
