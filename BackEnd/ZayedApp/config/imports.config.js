@@ -25,5 +25,5 @@ export const generatePassword = generator.generate({
 
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId,Joi,dotenv,Sequelize}
+export {express,bodyParser,logger,cors,uniqId,Joi,Sequelize}
 
