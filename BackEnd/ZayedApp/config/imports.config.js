@@ -9,6 +9,7 @@ import bcrypt from 'bcryptjs';
 import Joi from '@hapi/joi';
 import dotenv from  'dotenv';
 import Sequelize from 'sequelize';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 const salt = bcrypt.genSaltSync(10);
@@ -25,5 +26,5 @@ export const generatePassword = generator.generate({
 
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId,Joi,Sequelize}
+export {express,bodyParser,logger,cors,uniqId,Joi,Sequelize,jwt}
 
