@@ -4,20 +4,16 @@ import { passwordCompare } from '../../config/imports.config';
 import { configErrMsg, configUsrToken } from './helper/user.config.hlp';
 
 
-let  Where = [], required={}, password ='';
+let  Where = [], Required={}, password ='';
 
-const initLogin =(bdy)=>{
-    let email = bdy['email']
-    ,username = bdy['username']
-    ,phone = bdy['phone']
-    ,mac_address = bdy['mac_address'];
-    password = bdy['password'];
-    required = {mac_address};
-
-   if(email) Where.push({email:email});
-   if (username) Where.push({username:username});
-   if (phone) Where.push({_phone:phone});
-    
+const initLogin =(usrBdy)=>{
+    let mac_address = usrBdy['mac_address'];
+    let usrFindTool = new Set(['email','phone','username']);
+    Object.keys(usrBdy).map(key=>{
+        if(usrFindTool.has(key)) Where.push({key:usrBdy[key]});
+    })
+    password = usrBdy['password'];
+    Required = {mac_address};    
 };
 
 
@@ -25,13 +21,13 @@ const initLogin =(bdy)=>{
 const loginCtrl = {
     view : (req,res)=>{
         initLogin(req.body);
-        findByWithOrService(userModel,required,Where)
-        .then(result=>{
-            if(!result.length) res.json(configErrMsg('user not found'));
+        findByWithOrService(userModel,Required,Where)
+        .then(usrData=>{
+            if(!usrData.length) res.json(configErrMsg('user not found'));
             else {
-                let hashedPassword = result[0].password; 
+                let hashedPassword = usrData[0].password; 
                 if(passwordCompare(password,hashedPassword))
-                    res.json(configUsrToken(result[0]));
+                    res.json(configUsrToken(usrData[0]));
                 else  res.json(configErrMsg('password not correct'));   
             }
         }).catch(err=>{if(err)res.json(configErrMsg(err))})
