@@ -12,6 +12,11 @@ const usrSchemaValidation = {
     role_id:Joi.string().required()
 };
 
+const usrSchema = Joi.object().keys(usrSchemaValidation);
+
+const usrIsValid = usrData => Joi.validate(usrData, usrSchema);
+
+
 const initUsr = usrData => {
     let lowerData = new Set(['email','username','fname','lname' ])
     Object.keys(usrData).map(k=>{
@@ -24,9 +29,6 @@ const initUsr = usrData => {
     return usrData;
 };
 
-const usrSchema = Joi.object().keys(usrSchemaValidation);
-
-const usrIsValid = usrData => Joi.validate(usrData, usrSchema);
 
 const errMsg = {
     password : "Passwords will contain at least 6 characters in length and "+

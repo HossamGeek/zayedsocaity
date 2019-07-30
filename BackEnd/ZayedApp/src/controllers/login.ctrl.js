@@ -1,32 +1,10 @@
 import userModel from '../models/user.mdl';
 import {findByWithOrService} from '../services/view.service';
 import { passwordCompare } from '../../config/imports.config';
-import { jwtSign } from '../services/jwt.service';
+import { configErrMsg, configUsrToken } from './helper/user.config.hlp';
 
 
-let tokenId ='' , Where = [], required={}, password ='';
-let usrBasicInform = {
-    fname:"",
-    lname:"",
-    email:"",
-    username:"",
-    approved:""
-    };
-let usrSecureInform = {
-    id:"",
-    location_id:"",
-    role_id:""
-}    
-
-let errMsg = (err) => {return {data:'Transaction Failed',err:err,success:false}}
- 
-const ConfigResponseUsrData = (dbUsrData)=>{
-    Object.keys(usrBasicInform).map(key=> usrBasicInform[key] = dbUsrData[key]);
-    Object.keys(usrSecureInform).map(key=> usrSecureInform[key] = dbUsrData[key]);
-    tokenId = Object.assign({},usrBasicInform,usrSecureInform)
-    tokenId = jwtSign(tokenId);
-    return {data:"success login ",usrData:usrBasicInform,success:true,token_id:tokenId}
-};
+let  Where = [], required={}, password ='';
 
 const initLogin =(bdy)=>{
     let email = bdy['email']
@@ -49,14 +27,14 @@ const loginCtrl = {
         initLogin(req.body);
         findByWithOrService(userModel,required,Where)
         .then(result=>{
-            if(!result.length) res.json(errMsg('user not found'));
+            if(!result.length) res.json(configErrMsg('user not found'));
             else {
                 let hashedPassword = result[0].password; 
                 if(passwordCompare(password,hashedPassword))
-                    res.json(ConfigResponseUsrData(result[0]));
-                else  res.json(errMsg('password not correct'));   
+                    res.json(configUsrToken(result[0]));
+                else  res.json(configErrMsg('password not correct'));   
             }
-        }).catch(err=> res.json(errMsg(err)))
+        }).catch(err=>{if(err)res.json(configErrMsg(err))})
     }
 }
 
