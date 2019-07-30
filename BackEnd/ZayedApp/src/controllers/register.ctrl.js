@@ -1,8 +1,8 @@
 import userModel from '../models/user.mdl';
 import createService from '../services/create.service';
 import { sendMail } from '../services/mailer.service';
-import { configErrMsg, configUsrToken } from './helper/user.config.hlp';
-
+import { configUsrToken } from './helper/user.config.hlp';
+import { configErrMsg } from './helper/err.config.hlp';
 
 
 const registerCtrl = {

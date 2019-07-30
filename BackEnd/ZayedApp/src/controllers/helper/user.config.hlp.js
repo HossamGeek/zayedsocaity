@@ -15,7 +15,6 @@ let usrSecureInform = {
     role_id:""
 }    
 
-export const configErrMsg = (err) => {return {data:'Transaction Failed',err:err,success:false}}
  
 export const configUsrToken = (dbUsrData)=>{
     Object.keys(usrBasicInform).map(key=> usrBasicInform[key] = dbUsrData[key]);

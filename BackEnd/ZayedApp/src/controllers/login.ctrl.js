@@ -1,7 +1,8 @@
 import userModel from '../models/user.mdl';
 import {findByWithOrService} from '../services/view.service';
 import { passwordCompare } from '../../config/imports.config';
-import { configErrMsg, configUsrToken } from './helper/user.config.hlp';
+import { configUsrToken } from './helper/user.config.hlp';
+import { configErrMsg } from './helper/err.config.hlp';
 
 
 let  Where = [], Required={}, password ='';

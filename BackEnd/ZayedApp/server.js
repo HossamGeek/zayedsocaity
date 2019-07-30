@@ -9,5 +9,5 @@ const app = express(),
 appConfig(app);
 
 http.listen(process.env.port || port,()=>{
-    console.log('running in port ' + port);    
+    console.log("Server's running in port " + process.env.port || port);    
 })
