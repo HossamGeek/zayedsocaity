@@ -13,7 +13,7 @@ import Sequelize from 'sequelize';
 import jwt from 'jsonwebtoken';
 import randomCode from 'randomstring';
 import nodemailer from 'nodemailer';
-
+import createErrors from 'http-errors';
 
 
 dotenv.config();
@@ -36,5 +36,6 @@ export const generateCode = () => randomCode.generate({
     charset: 'numeric'
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
-export {express,bodyParser,logger,cors,uniqId,Sequelize,jwt,nodemailer}
+export {express,bodyParser,logger,cors,uniqId,Sequelize,jwt,
+    nodemailer,createErrors}
 

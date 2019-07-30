@@ -1,6 +1,6 @@
 import locationModel from '../models/location.mdl';
 import createService from '../services/create.service';
-import findAllService from '../services/view.service';
+import {findAllService} from '../services/view.service';
 
 let errMsg = (err) => {return {data:'Transaction Failed',err:err,success:false}}
 const locationCtrl = {
