@@ -78,6 +78,13 @@ const userModel =   sequelize.define('user',{
                 key: 'role_id',
             },
       },  
+      male:{
+        field:'male',
+        type:DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true 
+
+      }
       approved:{
         field:'approved',
         type:DataTypes.BOOLEAN,
