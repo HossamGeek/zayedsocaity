@@ -10,6 +10,11 @@ const issueModel =   sequelize.define('issue',{
         primaryKey:true,
         unique:true
     },
+    issue_num:{
+      field:'issue_num',
+      type:DataTypes.STRING,
+      unique:true
+    },
     issue_name:{
         field:'issue_name',
         type:DataTypes.STRING,

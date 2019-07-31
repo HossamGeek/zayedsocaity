@@ -11,6 +11,11 @@ const statusModel =   sequelize.define('status',{
         type:DataTypes.STRING,
         unique:true
     },
+    status_num:{
+      field:'status_num',
+      type:DataTypes.INTEGER,
+      unique:true
+  },
     is_in_active:{
         field:'is_in_active',
         type:DataTypes.BOOLEAN,
