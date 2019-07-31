@@ -34,7 +34,6 @@ const upload = multer({
       bucket: 'appimages',
       acl: 'public-read',
       metadata: function (req, file, cb) {
-          //console.log(file);
         cb(null, {fieldName: 'TEST_META_DATA'}); //file.fieldname
       },
       key: function (req, file, cb) {

@@ -23,8 +23,6 @@ dotenv.config();
 const salt = bcrypt.genSaltSync(10);
 
 
-
-
 export const Joi = BaseJoi.extend(Extension);
 export const passwordRegex = /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!&$@%&? "]).*$/;
 export const hashPassword = password => bcrypt.hashSync(password, salt);
