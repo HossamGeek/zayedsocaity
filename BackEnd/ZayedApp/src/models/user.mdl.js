@@ -84,7 +84,7 @@ const userModel =   sequelize.define('user',{
         allowNull: false,
         defaultValue: true 
 
-      }
+      },
       approved:{
         field:'approved',
         type:DataTypes.BOOLEAN,

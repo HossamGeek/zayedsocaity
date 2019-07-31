@@ -7,6 +7,7 @@ import roleRouter from './role.route';
 import statusRouter from './status.route';
 import reportRouter from './report.route';
 import evaluationRouter from './evaluation.route';
+import imgRouter from './img.route';
 
 
 const Router = app => {
@@ -17,6 +18,8 @@ const Router = app => {
     app.use('/status',statusRouter);
     app.use('/report',reportRouter);
     app.use('/evaluation',evaluationRouter);
+    app.use('/img',imgRouter);
+
     app.use((req,res,next)=>{
         let Authorization = req.headers['authorization'].split(' ')[1];
         let tokenIsValid = jwtVerify(Authorization);
