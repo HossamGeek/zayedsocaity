@@ -21,7 +21,7 @@ const Router = app => {
     app.use('/img',imgRouter);
 
     app.use((req,res,next)=>{
-        let Authorization = req.headers['authorization'].split(' ')[1];
+        let Authorization = req.headers['authorization']? req.headers['authorization'].split(' ')[1] : '';
         let tokenIsValid = jwtVerify(Authorization);
         if(tokenIsValid.success){
             req.headers['authorization'] = tokenIsValid.data;
@@ -31,7 +31,7 @@ const Router = app => {
 
     app.use( (req,res) =>{
         console.log('404 Not Found...Uh oh, something went wrong!');
-        console.log(createErrors(404));
+        //console.log(createErrors(404));
         res.json({data:'404 Not Found...Uh oh, something went wrong!',
            err:(404),success:false});
         //next(createErrors(404));

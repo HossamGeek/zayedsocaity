@@ -5,7 +5,19 @@ const env = process.env;
 
 
 if (process.env.NODE_ENV === 'production')    {
-        sequelize = "";
+        sequelize = new Sequelize(env.dbServerName,env.dbServerUser,env.dbServerPass,
+            {
+                    define: {
+                    charset: 'utf8',
+                    collate: 'utf8_general_ci', 
+                    timestamps: true
+                    },
+                
+                    host: env.dbServerHost,
+                    port:env.dbServerPort,
+                    dialect: 'mysql',
+                    logging: false  
+            });
     } else {
         sequelize = new Sequelize(env.dbName,env.dbUsername,env.dbPass,
             {

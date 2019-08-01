@@ -1,0 +1,5 @@
+---
+applications:
+ - name: zapp
+   random-route: false
+   memory: 200M
