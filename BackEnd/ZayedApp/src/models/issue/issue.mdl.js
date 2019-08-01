@@ -18,7 +18,6 @@ const issueModel =   sequelize.define('issue',{
     issue_name:{
         field:'issue_name',
         type:DataTypes.STRING,
-        unique:true
     },
     description:{
       field:'description',

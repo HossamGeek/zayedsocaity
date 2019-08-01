@@ -38,22 +38,25 @@ const errMsg = {
     "and lowercase"
 };
 
+
+const handelErr = (err,res) =>{
+    let details = err['details'][0], path = details['path'][0];
+    if( path == 'password')
+        res.json({data: errMsg.password,success:false})
+    if( path == 'fname' || path == 'lname')
+        res.json({data:errMsg.name,success:false})   
+    res.json({data:details['message'],success:false});
+
+}
+
 const registerMidWr = {
     configUserData : (req,res,next)=>{
         let usrBdy = req.body;
-        let haveErr = usrIsValid(usrBdy)['error'];
-        if(haveErr === null){
+        let haveErr = usrIsValid(usrBdy)['error'];       
+         if(haveErr === null){
             req.body = initUsr(usrBdy);
             next();
-        }else{
-            let details = haveErr['details'][0];
-            let path = details['path'][0];
-            if( path == 'password')
-                res.json({data: errMsg.password,success:false})
-            else if( path == 'fname' || path == 'lname')
-                res.json({data:errMsg.name,success:false})   
-            else res.json({data:details['message'],success:false});
-        }   
+        }else handelErr(haveErr,res);
     }
 };
 

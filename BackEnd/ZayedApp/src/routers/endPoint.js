@@ -8,9 +8,13 @@ import statusRouter from './status.route';
 import reportRouter from './report.route';
 import evaluationRouter from './evaluation.route';
 import imgRouter from './img.route';
+import issueRoute from './issue.route';
 
 
+let Auth = auth =>  auth ? jwtVerify(auth.split(' ')[1]) : jwtVerify(''); 
 const Router = app => {
+   
+
     app.use('/register',registerRouter);
     app.use('/login',loginRouter);
     app.use('/location',locationRouter);
@@ -20,21 +24,21 @@ const Router = app => {
     app.use('/evaluation',evaluationRouter);
     app.use('/img',imgRouter);
 
+  
+    
     app.use((req,res,next)=>{
-        let Authorization = req.headers['authorization']? req.headers['authorization'].split(' ')[1] : '';
-        let tokenIsValid = jwtVerify(Authorization);
-        if(tokenIsValid.success){
-            req.headers['authorization'] = tokenIsValid.data;
-            next();
-        }else res.json(tokenIsValid);
-    })
+        let Authorized = Auth(req.headers['authorization']);
+        if(!Authorized.success)
+             return res.json(Authorized);
+        req.session['authorization'] = Authorized.data;
+        next();
+    });
 
-    app.use( (req,res) =>{
-        console.log('404 Not Found...Uh oh, something went wrong!');
-        //console.log(createErrors(404));
+    app.use('/issue',issueRoute);
+    
+    app.use((req,res) =>{
         res.json({data:'404 Not Found...Uh oh, something went wrong!',
            err:(404),success:false});
-        //next(createErrors(404));
     });
     
 };

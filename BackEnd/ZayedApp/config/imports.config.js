@@ -18,6 +18,8 @@ import path from 'path';
 import multer from 'multer';
 import IBM from 'ibm-cos-sdk';
 import multerS3 from 'multer-s3';
+import session from 'express-session';
+
 
 dotenv.config();
 const salt = bcrypt.genSaltSync(10);
@@ -41,5 +43,5 @@ export const generateCode = () => randomCode.generate({
 });
 export const midParse = bodyParser.urlencoded({ extended: true });
 export {express,bodyParser,logger,cors,uniqId,Sequelize,jwt,
-    nodemailer,createErrors,path,multer,IBM,multerS3}
+    nodemailer,createErrors,path,multer,IBM,multerS3,session}
 
