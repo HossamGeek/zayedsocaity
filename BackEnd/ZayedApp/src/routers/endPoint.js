@@ -35,6 +35,7 @@ const Router = app => {
     });
 
     app.use('/issue',issueRoute);
+
     
     app.use((req,res) =>{
         res.json({data:'404 Not Found...Uh oh, something went wrong!',
