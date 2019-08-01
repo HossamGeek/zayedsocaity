@@ -13,7 +13,7 @@ const statusModel =   sequelize.define('status',{
     },
     status_num:{
       field:'status_num',
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       unique:true
   },
     is_in_active:{

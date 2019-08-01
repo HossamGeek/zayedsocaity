@@ -7,3 +7,4 @@ export const findAllService = Model => Model.findAll();
 //Where here means as arr of objects like this [{email:{$email},{username:{$username},}
 export const findByWithOrService = (Model,With,Where) => Model.findAll({where:With,[Op.or]:Where}); 
 
+export const countService = (Model,Where = {}) => Model.count({where:Where});
