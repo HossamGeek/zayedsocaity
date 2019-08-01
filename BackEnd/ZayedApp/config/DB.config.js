@@ -5,6 +5,7 @@ const env = process.env;
 
 
 if (process.env.NODE_ENV === 'production')    {
+    
         sequelize = new Sequelize(env.dbServerName,env.dbServerUser,env.dbServerPass,
             {
                     define: {
