@@ -5,9 +5,8 @@ import {findAllService} from '../services/view.service';
 
 let errMsg = (err) => {return {data:'Transaction Failed',err:err,success:false}}
 const statusCtrl = {
-    newStatus: bdy => createService(statusModel,bdy),
     create : (req,res) => {
-        statusCtrl.newStatus(req.body)
+        createService(statusModel,req.body)
         .then(result=>res.json({data:result,success:true}))
         .catch(err=> res.json(errMsg(err)))
     },
