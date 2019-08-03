@@ -8,3 +8,5 @@ export const findAllService = Model => Model.findAll();
 export const findByWithOrService = (Model,With,Where) => Model.findAll({where:With,[Op.or]:Where}); 
 
 export const countService = (Model,Where = {}) => Model.count({where:Where});
+
+export const findByService = (Model,Where) => Model.findAll({where:Where});

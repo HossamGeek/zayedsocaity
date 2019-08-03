@@ -29,6 +29,13 @@ const issue_imgModel =   sequelize.define('issue_img',{
               model: issueModel,
               key: 'issue_id',
           },
+    },  
+    user_id: {
+      type: DataTypes.STRING,
+      references: {
+              model: userModel,
+              key: 'user_id',
+          },
     }, 
     createdAt: {
         type: DataTypes.DATE,

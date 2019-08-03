@@ -30,6 +30,13 @@ const issue_videoModel =   sequelize.define('issue_video',{
               key: 'issue_id',
           },
     }, 
+    user_id: {
+      type: DataTypes.STRING,
+      references: {
+              model: userModel,
+              key: 'user_id',
+          },
+    }, 
     
     createdAt: {
         type: DataTypes.DATE,
