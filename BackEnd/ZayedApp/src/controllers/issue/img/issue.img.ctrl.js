@@ -3,15 +3,18 @@ import createService from '../../../services/create.service';
 import {forceRemoveService} from '../../../services/remove.service'
 import { configErrMsg } from '../../helper/err.config.hlp';
 
-
-const issue_imgCtrl = {
+export const issueImgService ={
     createImgService : (bdy)=>createService(issue_imgModel,bdy),
     forceRemoveIssueImg : (id)=> forceRemoveService(issue_imgModel,id),
+
+}
+const issueImgCtrl = {
     createIssueImg : (req,res)=>{
-        issue_imgCtrl.createImgService(req.body)
+        issueImgService.createImgService(req.body)
         .then(result=>res.json({data:result,success:true}))
         .catch(err=> res.json(configErrMsg(err)))
     }
 }
 
 
+export default issueImgCtrl;

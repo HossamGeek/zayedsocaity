@@ -5,11 +5,16 @@ import createService from '../../services/create.service';
 import {configResultData} from "../helper/view.hlp";
 import {forceRemoveService} from '../../services/remove.service';
 
-const issueCtrl = {
+
+export const issueService = {
     createIssueService : (bdy) => createService(issueModel,bdy),
-    forceRemoveissue : (id) => forceRemoveService(issueModel,id),
+    forceRemoveIssue : (id) => forceRemoveService(issueModel,id),
+
+}
+
+const issueCtrl = {
     create : (req,res)=>{
-        issueCtrl.createIssueService(req.body)
+        issueService.createIssueService(req.body)
         .then(result=>res.json({data:result,success:true}))
         .catch(err=> res.json(configErrMsg(err)))
     },

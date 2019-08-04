@@ -1,4 +1,4 @@
-import {sequelize,DataTypes} from '../../../config/DB.config'
+import {sequelize,DataTypes} from '../../../../config/DB.config';
 import issueModel from '../issue.mdl';
 import userModel from '../../user.mdl';
 import statusModel from '../../status.mdl';

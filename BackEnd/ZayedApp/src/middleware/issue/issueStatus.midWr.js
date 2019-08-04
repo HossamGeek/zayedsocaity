@@ -1,7 +1,7 @@
 let auth ;
 
 const issueStatusMidwr = {
-    checkHeadrsIsValid : (req,res,next)=>{
+    checkHeadersIsValid : (req,res,next)=>{
         auth = req.session['authorization'];
         let issue_id = req.headers['issue_id'];
         let status_id = req.headers['status_id'];
