@@ -10,7 +10,7 @@ const configIssueStatusData  = () => {
 
 const getPendingStatus = ()=>{
     statusService.getStatusByNum(1).then(value=>{
-        console.log(value);
+       status_id = value[0]['id'];
     })
 }
 
@@ -35,6 +35,7 @@ const creatIssueVideo = (bdy)=>{
 
 const issueForm = {
     createIssue : (req,res)=>{
+        getPendingStatus();
         
     }
 };
