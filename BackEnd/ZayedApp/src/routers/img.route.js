@@ -1,8 +1,8 @@
 import {midParse,express} from '../../config/imports.config';
-import upload from '../services/file-upload.service';
+import {imgFilter} from '../services/file-upload.service';
 
 const imgRouter = express.Router();
-const singleUpload = upload.any('imgs');
+const singleUpload = imgFilter.any('imgs');
 
 imgRouter.post('/issue',(req,res) => {
    singleUpload(req,res,(err)=>{

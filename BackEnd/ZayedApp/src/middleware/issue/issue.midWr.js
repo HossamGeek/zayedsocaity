@@ -34,11 +34,12 @@ const customSearch = (headers) => {
 }
 
 const issueMidWr = {
+    //?? validation issue data before create
     configIssueData : (req,res,next)=>{
         auth = req.session['authorization'];
         let issueBdy = req.body;
         let haveErr = issueIsValid(issueBdy)['error'];
-        if(haveErr === null){
+        if(haveErr){
             let msgErr = haveErr['details'][0]['message'];
             return res.json({data:msgErr,success:false});
         }

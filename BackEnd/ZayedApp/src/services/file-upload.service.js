@@ -1,5 +1,8 @@
 import {multer,multerS3,IBM} from '../../config/imports.config';
 
+let videosType = new Set(['video/WebM','video/mp4','video/ogg']);
+let imgsType = new Set(['image/jpeg','image/png','image/gif']);
+
 IBM.config.update ( {
     endpoint: process.env.ibmEndpoint,
     apiKeyId: process.env.ibmApiKeyId,
@@ -14,22 +17,8 @@ IBM.config.update ( {
 
 const s3 = new IBM.S3();
 
-const fileFilter = (req,file,cb)=>{
-    let fileName = file.fieldname;
-    let fileType =file.mimetype;
-    let videosType = new Set(['video/WebM','video/mp4','video/ogg']);
-    let imgsType = new Set(['image/jpeg','image/png']);
-    if(fileName === 'imgs' && imgsType.has(fileType))
-        cb(null,true);
-    else if(fileName === 'videos' && videosType.has(fileType))
-        cb(null,true);
-    else
-        cb(new Error("invalid type,for imgs only jpeg or png and videos only mp4 or WebM or ogg"),false)    
-}
 
-const upload = multer({
-    fileFilter,
-    storage: multerS3({
+const storage = multerS3({
         s3,
       bucket: 'appimages',
       acl: 'public-read',
@@ -39,8 +28,42 @@ const upload = multer({
       key: function (req, file, cb) {
         cb(null, Date.now().toString())
       }
-    })
-  })
+})
 
-  export default upload;
+const imgIsValid = (req,file,cb)=>{
+  let fileName = file.fieldname;
+  let fileType =file.mimetype;
+  if(fileName === 'imgs' && imgsType.has(fileType))
+    cb(null,true);
+  else cb(new Error("invalid type,for imgs only jpeg or png or gif"),false)
+}
+
+const videoIsValid = (req,file,cb)=>{
+  let fileName = file.fieldname;
+  let fileType =file.mimetype;
+  if(fileName === 'videos' && videosType.has(fileType))
+    cb(null,true);
+  else cb(new Error("invalid type,for videos only mp4 or WebM or ogg"),false)
+}
+
+
+export const imgFilter = multer({
+  fileFilter:imgIsValid
+})
+
+export const videoFilter = multer({
+  fileFilter:videoIsValid
+})
+
+
+export const uploadImg = multer({
+  fileFilter:imgIsValid,
+    storage
+})
+
+export const uploadVideo = multer({
+  fileFilter:videoIsValid,
+    storage
+})
+
   

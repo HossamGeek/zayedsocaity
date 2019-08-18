@@ -10,7 +10,7 @@ import evaluationRouter from './evaluation.route';
 import imgRouter from './img.route';
 import issueRoute from './issue.route';
 import issue_statusModel from '../models/issue/status/issue_status.mdl';
-console.log(issue_statusModel);
+//console.log(issue_statusModel);
 
 
 let Auth = auth =>  auth ? jwtVerify(auth.split(' ')[1]) : jwtVerify(''); 

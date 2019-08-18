@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js --exec babel-node "
+    "start": "nodemon server.js --exec babel-node ",
+    "prod":"pm2 start babel-node server.js"
+    
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +38,7 @@
     "nodemailer": "^6.3.0",
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
+    "pm2": "^3.5.1",
     "randomstring": "^1.1.5",
     "sequelize": "^5.10.3",
     "uniqid": "^5.0.3"
