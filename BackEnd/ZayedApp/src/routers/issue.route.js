@@ -10,7 +10,7 @@ const issueRouter = express.Router();
 issueRouter.route('')
 .post(midParse,issueMidWr.configIssueData,issueCtrl.create);
 
-//issueRouter.post('/new',midParse,issueMidWr.configIssueData,issueForm.createIssueForm);
+issueRouter.post('/new',midParse,issueMidWr.configIssueData,issueForm.create);
 
 
 

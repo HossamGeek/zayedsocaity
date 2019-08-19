@@ -8,6 +8,7 @@ const issueSchemaValidation = {
     description: Joi.string().replace(/[<>]/g, ""),
     address: Joi.string().replace(/[<>]/g, ""),
     location_id: Joi.string().required(),
+    url:Joi.array()
 };
 const issueSchema = Joi.object().keys(issueSchemaValidation);
 const issueIsValid = issueData => Joi.validate(issueData, issueSchema);
