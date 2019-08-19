@@ -55,7 +55,8 @@ export const deleteFile  =  (key) => {
     return s3.deleteObject({
         Bucket: bucket,
         Key: key
-    }).promise()
+    })
+    .promise()
     .then(() =>{
         return({data:`Item: ${key} deleted!`,success:true});
     })

@@ -7,17 +7,6 @@ import issueForm from '../controllers/issue/issue.create.form';
 const issueRouter = express.Router();
 
 
-const imgIsUploaded = (req,res,next) => imgUpload(req,res,(err)=>{
-    if(err) return res.json({data:'file upload err',err:err.message,success:false});
-    req.body.imgsUrl =  req.files;
-    next();
- })
-
- const videoIsUploaded = (req,res,next)=> videoUpload(req,res,(err)=>{
-    if(err) return res.json({data:'file upload err',err:err.message,success:false});
-    req.body.videosUrl =  req.files;
- })
-
 issueRouter.route('')
 .post(midParse,issueMidWr.configIssueData,issueCtrl.create);
 
