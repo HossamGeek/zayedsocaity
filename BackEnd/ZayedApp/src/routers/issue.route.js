@@ -2,9 +2,8 @@ import {midParse,express} from '../../config/imports.config';
 import issueMidWr from '../middleware/issue/issue.midWr';
 import issueCtrl from '../controllers/issue/issue.ctrl';
 import issueForm from '../controllers/issue/issue.create.form';
-import {imgFilter} from '../services/file-upload.service';
-const imgUpload = imgFilter.any('imgs');
-const videoUpload = imgFilter.any('videos');
+
+
 const issueRouter = express.Router();
 
 
@@ -24,10 +23,6 @@ issueRouter.route('')
 
 //issueRouter.post('/new',midParse,issueMidWr.configIssueData,issueForm.createIssueForm);
 
-issueRouter.post('/new',imgIsUploaded,(req,res)=>{
-
-    res.json(req.body)
-})
 
 
 issueRouter.get('/usr',issueMidWr.userSearch,issueCtrl.view);

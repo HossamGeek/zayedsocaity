@@ -1,6 +1,4 @@
 import {multer,multerS3,IBM} from '../../config/imports.config';
-let videosType = new Set(['video/WebM','video/mp4','video/ogg']);
-let imgsType = new Set(['image/jpeg','image/png','image/gif']);
 
 let videosType = new Set(['video/WebM','video/mp4','video/ogg']);
 let imgsType = new Set(['image/jpeg','image/png','image/gif']);
