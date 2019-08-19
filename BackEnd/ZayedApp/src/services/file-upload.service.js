@@ -2,6 +2,9 @@ import {multer,multerS3,IBM} from '../../config/imports.config';
 let videosType = new Set(['video/WebM','video/mp4','video/ogg']);
 let imgsType = new Set(['image/jpeg','image/png','image/gif']);
 
+let videosType = new Set(['video/WebM','video/mp4','video/ogg']);
+let imgsType = new Set(['image/jpeg','image/png','image/gif']);
+
 IBM.config.update ( {
     endpoint: process.env.ibmEndpoint,
     apiKeyId: process.env.ibmApiKeyId,
@@ -66,4 +69,6 @@ export const deleteFile  =  (key) => {
 
 
   export default mediaUpload;
+
+
   

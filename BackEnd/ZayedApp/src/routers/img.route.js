@@ -1,8 +1,9 @@
 import {express} from '../../config/imports.config';
 import mediaUpload ,{deleteFile} from '../services/file-upload.service';
-
 const imgRouter = express.Router();
 const mediaUploaded = mediaUpload.any();
+
+const imgRouter = express.Router();
 
 
 const mediaIsUploaded = (req,res,next)=>mediaUploaded(req,res,err =>{

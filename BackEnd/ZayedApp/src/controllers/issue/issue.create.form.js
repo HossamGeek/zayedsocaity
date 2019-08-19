@@ -7,15 +7,20 @@ const configIssueStatusData  = () => {
     
 }
 
+const rollback = ()=>{
+
+}
 
 const getPendingStatus = ()=>{
-    statusService.getStatusByNum(1).then(value=>{
+    return statusService.getStatusByNum(1).then(value=>{
        status_id = value[0]['id'];
     })
 }
 
-const creatIssueStandAlone = (bdy)=>{
-    
+const creatIssueData = (bdy)=>{
+    getPendingStatus().then(done=>{
+
+    })
 }
 
 
@@ -34,10 +39,26 @@ const creatIssueVideo = (bdy)=>{
 
 
 const issueForm = {
-    createIssue : (req,res)=>{
-        getPendingStatus();
+    createIssueForm : (req,res)=>{     
+        //? get userId 
+            user_id = req.session['authorization']['id'];
+           //? create issue data
+              res.json(req.body);
+                //* success *// 
+                    //? create status issue
+                        //* success *//
+                        //! rollback    
+                    //? create status img
+                        //* success *//
+                        //! push err "can't add img" 
+                    //? create status video
+                        //* success *//
+                        //! push err "can't add video"
+           
+          
         
-    }
+    },
+
 };
 
 export default issueForm;
