@@ -24,13 +24,13 @@ const getPendingStatus = ()=>{
 }
 
 const creatIssueData = (bdy)=>{
-    return issueService.createIssueService(bdy);   
+    return issueService.create(bdy);   
 }
 
 
 const creatIssueStatus = (bdy)=>{
     bdy.id= uniqId('issue#status!#@');
-    return issueStatusService.createIssueStatusService(bdy)
+    return issueStatusService.create(bdy)
 }
 
 const creatIssueImg = (bdy)=>{

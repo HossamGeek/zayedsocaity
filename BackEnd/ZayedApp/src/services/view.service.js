@@ -1,12 +1,20 @@
 import {DataTypes} from '../../config/DB.config';
 const Op = DataTypes.Op;
 
-export const findAllService = Model => Model.findAll();
+export default class ViewService {
+    constructor(model){
+         this._model = model;   
+    }
+    findAll () 
+        {this._model.findAll();}
 
-//With here means group of data to find by it such like this {address:"cairo"}
-//Where here means as arr of objects like this [{email:{$email},{username:{$username},}
-export const findByWithOrService = (Model,With,Where) => Model.findAll({where:With,[Op.or]:Where}); 
+    findByWithOr (With,Where)
+        { this._model.findAll({where   : With,[Op.or]:Where})}
 
-export const countService = (Model,Where = {}) => Model.count({where:Where});
+    count (Where = {}) 
+        {this._model.count({where   : Where})}
+    
+    findBy (Where) 
+        {this._model.findAll({where : Where})}
 
-export const findByService = (Model,Where) => Model.findAll({where:Where});
+}

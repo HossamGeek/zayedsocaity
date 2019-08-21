@@ -1,13 +1,15 @@
 import userModel from '../models/user.mdl';
-import createService from '../services/create.service';
 import { sendMail } from '../services/mailer.service';
 import { configUsrToken } from './helper/user.config.hlp';
 import { configErrMsg } from './helper/err.config.hlp';
+import CreateService from '../services/create.service';
+
+const createService = new CreateService(userModel);
 
 
 const registerCtrl = {
     create : (req,res)=>{
-        createService(userModel,req.body)
+        createService.create(req.body)
         .then(result=>{
             sendMail(result,{type:"register"});
             res.json(configUsrToken(result));

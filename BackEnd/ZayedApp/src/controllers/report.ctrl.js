@@ -1,16 +1,19 @@
 import reportModel from '../models/report.mdl';
-import createService from '../services/create.service';
-import findAllService from '../services/view.service';
+import CreateService from '../services/create.service';
+import ViewService from '../services/view.service';
+
+const viewService = new ViewService(reportModel);
+const createService = new CreateService(reportModel);
 
 let errMsg = (err) => {return {data:'Transaction Failed',err:err,success:false}}
 const reportCtrl = {
     create : (req,res)=>{
-        createService(reportModel,req.body)
+        createService.create(req.body)
         .then(result=>res.json({data:result,success:true}))
         .catch(err=> res.json(errMsg(err)))
     },
     view:(req,res)=> {
-        findAllService(reportModel)
+        viewService.findAllService()
         .then(result=>res.json({data:result,success:true}))
         .catch(err=>res.json(errMsg(err)))
     }

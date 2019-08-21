@@ -1,9 +1,10 @@
 import userModel from '../models/user.mdl';
-import {findByWithOrService,findByService} from '../services/view.service';
+import ViewService from '../services/view.service';
 import { passwordCompare } from '../../config/imports.config';
 import { configUsrToken } from './helper/user.config.hlp';
 import { configErrMsg } from './helper/err.config.hlp';
 
+const viewService = new ViewService(userModel);
 
 let  Where = [], Required={}, password ='';
 
@@ -34,7 +35,7 @@ const userIsFound = (usrData)=>{
 const loginCtrl = {
     view : (req,res)=>{
         setLoginData(req.body);
-        findByService(userModel,Where)
+        viewService.findBy(Where)
         .then(usrData=>res.json(userIsFound(usrData)))
         .catch(err=>{if(err)res.json(configErrMsg(err))})
     }
