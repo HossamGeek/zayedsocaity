@@ -23,9 +23,11 @@ const IssueRollback = {
     status:()=>issueStatusService.forceRemove(issue_id),
     rollback:()=>{
         new Promise([
-            IssueRollback.issue(),
             IssueRollback.media(),
-            IssueRollback.status()
+            IssueRollback.status(),
+            IssueRollback.issue()
+            
+            
         ])
     }
 }
@@ -35,7 +37,6 @@ const IssueRollback = {
 const issueCreation = {
     issue:(bdy)=>{return issueService.create(bdy)},
     media:(bdy)=>{
-        bdy.id= uniqId('issue#media!#@');
         return issueMediaService.create(bdy);
     },
     status : (bdy)=>{
@@ -47,7 +48,10 @@ const issueCreation = {
 const mediaInit = (bdy)=>{
     files.map(file=>{
         bdy.gallery_id = file.id;
-        issueCreation.media(bdy);
+        bdy.id= uniqId('issue#media!#@');//not unique
+        issueCreation.media(bdy).then(rs=>{
+            console.log(rs);
+        }).catch(err=>console.log(err));
     })
 } 
 
@@ -63,7 +67,9 @@ const issueSequenceProcess = {
         return new Promise.all([
             issueCreation.status(bdy),
             mediaInit(bdy)
-        ])
+        ]).then(rs=>{
+            console.log('object');
+        })
        
     }
 }
