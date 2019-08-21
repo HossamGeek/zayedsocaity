@@ -3,7 +3,7 @@ export default class RemoveService {
         this._model = model;
     }
     forceRemove(id) 
-        {this._model.destroy({where:id})} 
+        { return this._model.destroy({where:id})} 
 }
 
 

@@ -1,16 +1,14 @@
 import {sequelize,DataTypes} from '../../../config/DB.config'
-import issueModel from './issue.mdl';
+import issueModel from '../issue.mdl';
+import issue_commentModel from './issue_comment.mdl';
+import userModel from '../../user.mdl';
+import galleryModel from '../../gallery.mdl';
 
-const issue_imgModel =   sequelize.define('issue_img',{
+const issue_comment_mediaModel =   sequelize.define('issue_comment_media',{
     id:{
-        field:'issue_img_id',
+        field:'issue_comment_media_id',
         type:DataTypes.STRING,
         primaryKey:true,
-        unique:true
-    },
-    issue_img_name:{
-        field:'issue_img_name',
-        type:DataTypes.STRING,
         unique:true
     },
     description:{
@@ -29,12 +27,26 @@ const issue_imgModel =   sequelize.define('issue_img',{
               model: issueModel,
               key: 'issue_id',
           },
-    },  
+    }, 
+    issue_comment_id: {
+      type: DataTypes.STRING,
+      references: {
+              model: issue_commentModel,
+              key: 'issue_comment_id',
+          },
+    }, 
     user_id: {
       type: DataTypes.STRING,
       references: {
               model: userModel,
               key: 'user_id',
+          },
+    }, 
+    gallery_id: {
+      type: DataTypes.STRING,
+      references: {
+              model: galleryModel,
+              key: 'gallery_id',
           },
     }, 
     createdAt: {
@@ -48,8 +60,8 @@ const issue_imgModel =   sequelize.define('issue_img',{
         defaultValue: DataTypes.NOW
       }
     }, {
-      tableName: 'issue_img',
+      tableName: 'issue_comment_media',
       freezeTableName: true
     });
 
-export  default issue_imgModel;
+export  default issue_comment_mediaModel;

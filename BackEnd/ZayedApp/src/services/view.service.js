@@ -6,15 +6,15 @@ export default class ViewService {
          this._model = model;   
     }
     findAll () 
-        {this._model.findAll();}
+        {return this._model.findAll();}
 
     findByWithOr (With,Where)
-        { this._model.findAll({where   : With,[Op.or]:Where})}
+        {return this._model.findAll({where   : With,[Op.or]:Where})}
 
     count (Where = {}) 
-        {this._model.count({where   : Where})}
+        {return this._model.count({where   : Where})}
     
     findBy (Where) 
-        {this._model.findAll({where : Where})}
+        {return this._model.findAll({where : Where})}
 
 }

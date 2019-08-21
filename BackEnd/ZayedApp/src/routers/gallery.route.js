@@ -1,16 +1,22 @@
 import {express} from '../../config/imports.config';
 import mediaUpload ,{deleteFile} from '../services/file-upload.service';
+import galleryCtrl from '../controllers/gallery.ctrl';
 
 const mediaUploaded = mediaUpload.any();
+const galleryRouter = express.Router();
 
-const imgRouter = express.Router();
 
-
-const mediaIsUploaded = (req,res,next)=>mediaUploaded(req,res,err =>{
+const mediaIsUploaded = (req,res,next)=>mediaUploaded(req,res,err =>{   
    if(err) return res.json({data:'file upload err',err:err.message,success:false});
-   return res.json({url:req.files}) 
-})
+   next();  
+});
 
+const userIdIsFound = (req,res,next) => {
+         let user_id = req.headers['user_id'];
+         if(!user_id)return res.json({data:"user_id required in headers",success:false});
+         req.headers = {user_id};
+         next()
+}
 const multiDelete = (url,res)=>{
    let totalFiles = 0,deleting = [], errDeleting = [];
    url.map(file=>deleteFile(file.key).then(result=>{
@@ -23,13 +29,15 @@ const multiDelete = (url,res)=>{
             failed:(errDeleting)
          },success:true});
    }))
-}
+};
 
-imgRouter.post('/new',mediaIsUploaded)
-imgRouter.delete('/single/:key',(req,res)=>{
+galleryRouter.post('/new',mediaIsUploaded,galleryCtrl.create);
+galleryRouter.get('/usr',userIdIsFound,galleryCtrl.view);
+
+galleryRouter.delete('/single/:key',(req,res)=>{
       deleteFile(req.params.key).then(result=> res.json(result))
       .catch(err=>res.json(err));                         
-})
-imgRouter.delete('/multi',(req,res)=>{multiDelete(req.body.url,res)});
+});
+galleryRouter.delete('/multi',(req,res)=>{multiDelete(req.body.files,res)});
 
-module.exports = imgRouter;
+module.exports = galleryRouter;

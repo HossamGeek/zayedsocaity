@@ -13,7 +13,6 @@ export const statusService = {
 }
 
 const statusCtrl = {
-   
     create : (req,res) => {
         createService.create(req.body)
         .then(result=>res.json({data:result,success:true}))

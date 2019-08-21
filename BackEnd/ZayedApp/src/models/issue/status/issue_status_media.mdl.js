@@ -2,17 +2,13 @@ import {sequelize,DataTypes} from '../../../config/DB.config'
 import issueModel from '../issue.mdl';
 import issue_statusModel from './issue_status.mdl';
 import userModel from '../../user.mdl';
+import galleryModel from '../../gallery.mdl';
 
-const issue_status_videoModel =   sequelize.define('issue_status_video',{
+const issue_status_mediaModel =   sequelize.define('issue_status_media',{
     id:{
-        field:'issue_status_video_id',
+        field:'issue_status_media_id',
         type:DataTypes.STRING,
         primaryKey:true,
-        unique:true
-    },
-    issue_status_video_name:{
-        field:'issue_status_video_name',
-        type:DataTypes.STRING,
         unique:true
     },
     description:{
@@ -39,6 +35,13 @@ const issue_status_videoModel =   sequelize.define('issue_status_video',{
               key: 'issue_status_id',
           },
     }, 
+    gallery_id: {
+      type: DataTypes.STRING,
+      references: {
+              model: galleryModel,
+              key: 'gallery_id',
+          },
+    }, 
     user_id: {
       type: DataTypes.STRING,
       references: {
@@ -57,8 +60,8 @@ const issue_status_videoModel =   sequelize.define('issue_status_video',{
         defaultValue: DataTypes.NOW
       }
     }, {
-      tableName: 'issue_status_video',
+      tableName: 'issue_status_media',
       freezeTableName: true
     });
 
-export  default issue_status_videoModel;
+export  default issue_status_mediaModel;

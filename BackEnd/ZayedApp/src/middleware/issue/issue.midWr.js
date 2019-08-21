@@ -4,11 +4,11 @@ let auth ;
 let searchKeys = new Set(['id','location_id','issue_num','user_id']);
 
 const issueSchemaValidation = {
-    issue_name: Joi.string().alphanum().min(3).max(30).required(),
+    issue_name: Joi.string().min(3).max(30).required(),
     description: Joi.string().replace(/[<>]/g, ""),
     address: Joi.string().replace(/[<>]/g, ""),
     location_id: Joi.string().required(),
-    url:Joi.array()
+    files:Joi.array()
 };
 const issueSchema = Joi.object().keys(issueSchemaValidation);
 const issueIsValid = issueData => Joi.validate(issueData, issueSchema);

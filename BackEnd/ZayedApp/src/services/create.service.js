@@ -4,7 +4,7 @@ export default class CreateService{
     }
     create (modelData)   
             {
-                this._model.sync({ force    : false })
+                return this._model.sync({ force    : false })
                 .then(() =>  this._model.create(modelData))
             }
 }

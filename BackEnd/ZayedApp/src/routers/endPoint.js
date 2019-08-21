@@ -7,10 +7,9 @@ import roleRouter from './role.route';
 import statusRouter from './status.route';
 import reportRouter from './report.route';
 import evaluationRouter from './evaluation.route';
-import imgRouter from './img.route';
+import galleryRouter from './gallery.route';
 import issueRoute from './issue.route';
-import issue_statusModel from '../models/issue/status/issue_status.mdl';
-//console.log(issue_statusModel);
+
 
 
 let Auth = auth =>  auth ? jwtVerify(auth.split(' ')[1]) : jwtVerify(''); 
@@ -24,7 +23,6 @@ const Router = app => {
     app.use('/status',statusRouter);
     app.use('/report',reportRouter);
     app.use('/evaluation',evaluationRouter);
-    app.use('/img',imgRouter);
 
   
     
@@ -35,6 +33,7 @@ const Router = app => {
         req.session['authorization'] = Authorized.data;
         next();
     });
+    app.use('/gallery',galleryRouter);
 
     app.use('/issue',issueRoute);
 
