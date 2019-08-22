@@ -47,7 +47,6 @@ const issueModel =   sequelize.define('issue',{
       type: DataTypes.UUID,
       references: {
               model: userModel,
-        
               key: 'user_id',
           },
     }, 

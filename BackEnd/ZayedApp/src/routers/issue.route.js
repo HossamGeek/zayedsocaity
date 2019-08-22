@@ -10,7 +10,9 @@ const issueForm  = new IssueForm();
 issueRouter.route('')
 .post(midParse,issueMidWr.configIssueData,issueCtrl.create);
 
-issueRouter.post('/new',midParse,issueMidWr.configIssueData,issueForm.create);
+issueRouter.route('/new')
+    .post(midParse,issueMidWr.configIssueData,issueForm.create)
+    .get(issueForm.view);
 
 
 

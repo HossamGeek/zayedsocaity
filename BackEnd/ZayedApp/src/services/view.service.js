@@ -15,10 +15,11 @@ export default class ViewService {
         {return this._model.count({where   : Where})}
     
     
-    sort (Where = {},limit = 1,sort = 'DESC')    
+    sort (Where = {},include = [],limit = 1,sort = 'DESC')    
         {
             return this._model.findAll({
                 limit,
+                include,
                 where : Where,
                 order: [ [ 'createdAt', sort ]]
             })

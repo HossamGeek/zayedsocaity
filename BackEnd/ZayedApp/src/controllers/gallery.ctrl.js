@@ -22,7 +22,6 @@ const initFiles = (req,res)=>{
             user_id,
             mime_type : file['mimetype'],
             location  : file['location'],
-            id        : file['key']
         }
         createFiles(fileData)
         .then(result=>{

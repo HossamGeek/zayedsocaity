@@ -13,7 +13,7 @@ const removeService = new RemoveService(issueModel);
 export const issueService = {
     create : (bdy) => createService.create(bdy),
     findAll:(Where = {}) => viewService.findAll(Where),
-    sort:(Where = {},limit = 1,sort = 'DESC') => viewService.sort(Where,limit,sort),
+    sort:(Where,include,limit,sort) => viewService.sort(Where,include,limit,sort),
     forceRemove : (id) =>  removeService.forceRemove(id)
     
 }

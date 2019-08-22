@@ -5,7 +5,6 @@ import {issueMediaService} from './media/issue.media.ctrl';
 import { configErrMsg } from '../helper/err.config.hlp';
 import {configResultData} from "../helper/view.hlp";
 
-
 let status_id ,issue_id ,user_id,mediaFiles;
 
 const prepare = {
@@ -32,7 +31,8 @@ const prepare = {
 
 const transaction = {
     view : {
-        pendingStatus: ()=> statusService.getStatusByNum(1)
+        pendingStatus: ()=> statusService.getStatusByNum(1),
+        issue:(Where,include,limit,sort)=>issueService.sort(Where,include,limit,sort)
     },
     create :  {
         issue:(bdy)=> issueService.create(bdy),
@@ -67,7 +67,7 @@ const concurrence = {
                     bdy["issue_id"] = issue.id;
                     let childData = prepare.childIssueData(bdy);
                     return concurrence.create.childIssue(childData);
-                }).catch(err=>err)
+                })
             },
             childIssue: (bdy)=>{
                 if(mediaFiles.length)  
@@ -115,7 +115,9 @@ export default class IssueForm{
             });
     }
     view (req,res){
-
+        transaction.view.issue().then(result=>{
+            res.json(result);
+        })
     }
 
 }
