@@ -8,8 +8,6 @@ import {configResultData} from "../helper/view.hlp";
 
 let status_id ,issue_id ,user_id,mediaFiles;
 
-
-
 const prepare = {
     mediaData : (files)=>
         {
@@ -86,7 +84,6 @@ const concurrence = {
 }
 
 const rollback = () => transaction.remove.rollback();
-
 
 const isFound = {
     pendingStatus : (formBody,pendingStatus,response) =>{
