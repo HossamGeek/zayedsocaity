@@ -45,7 +45,7 @@ const galleryCtrl = {
         initFiles(req,res)
     },
     view:(req,res)=> {
-        viewService.findBy(req.headers)
+        viewService.findAll(req.headers)
                 .then(result=>res.json({data:result,success:true}))
                 .catch(err=>res.json(errMsg(err)))
     }

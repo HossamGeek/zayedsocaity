@@ -2,8 +2,10 @@ import {sequelize,DataTypes} from '../../config/DB.config';
 const locationModel =   sequelize.define('location',{
     id:{
         field:'location_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     location_name:{

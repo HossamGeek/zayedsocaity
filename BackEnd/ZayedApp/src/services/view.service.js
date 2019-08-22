@@ -5,16 +5,23 @@ export default class ViewService {
     constructor(model){
          this._model = model;   
     }
-    findAll () 
-        {return this._model.findAll();}
+    findAll (Where = {}) 
+        {return this._model.findAll({where : Where})}
 
-    findByWithOr (With,Where)
-        {return this._model.findAll({where   : With,[Op.or]:Where})}
+    compare (compareData,Where ={})
+        {return this._model.findAll({where   : Where,[Op.or]:compareData})}
 
-    count (Where = {}) 
+    numberRows (Where = {}) 
         {return this._model.count({where   : Where})}
     
-    findBy (Where) 
-        {return this._model.findAll({where : Where})}
+    
+    sort (Where = {},limit = 1,sort = 'DESC')    
+        {
+            return this._model.findAll({
+                limit,
+                where : Where,
+                order: [ [ 'createdAt', sort ]]
+            })
+        }
 
 }

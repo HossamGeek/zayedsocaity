@@ -5,8 +5,10 @@ import userModel from '../user.mdl';
 const feedbackModel =   sequelize.define('feedback',{
     id:{
         field:'feedback_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     feedback_name:{
@@ -25,7 +27,7 @@ const feedbackModel =   sequelize.define('feedback',{
          defaultValue: false 
     },
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
         

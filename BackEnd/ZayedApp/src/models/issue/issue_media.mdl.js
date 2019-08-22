@@ -6,8 +6,10 @@ import userModel from '../user.mdl';
 const issue_mediaModel =   sequelize.define('issue_media',{
     id:{
         field:'issue_media_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     description:{
@@ -21,21 +23,21 @@ const issue_mediaModel =   sequelize.define('issue_media',{
          defaultValue: false 
     },
     issue_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: issueModel,
               key: 'issue_id',
           },
     }, 
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
               key: 'user_id',
           },
     }, 
     gallery_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: galleryModel,
               key: 'gallery_id',

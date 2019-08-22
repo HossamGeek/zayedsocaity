@@ -1,11 +1,11 @@
 import {midParse,express} from '../../config/imports.config';
 import issueMidWr from '../middleware/issue/issue.midWr';
 import issueCtrl from '../controllers/issue/issue.ctrl';
-import issueForm from '../controllers/issue/issue.create.form';
+import IssueForm from '../controllers/issue/issue.create.form';
 
 
 const issueRouter = express.Router();
-
+const issueForm  = new IssueForm();
 
 issueRouter.route('')
 .post(midParse,issueMidWr.configIssueData,issueCtrl.create);

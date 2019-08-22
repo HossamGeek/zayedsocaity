@@ -23,7 +23,7 @@ const issueStatusCtrl = {
         .catch(err=> res.json(configErrMsg(err)))
     },
     view :(req,res)=>{
-        viewService.findBy(req.headers)
+        viewService.findAll(req.headers)
         .then(result=>res.json(configResultData(result)))
         .catch(err=> res.json(configErrMsg(err)))
 

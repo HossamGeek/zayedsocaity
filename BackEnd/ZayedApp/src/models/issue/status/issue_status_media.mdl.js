@@ -7,8 +7,10 @@ import galleryModel from '../../gallery.mdl';
 const issue_status_mediaModel =   sequelize.define('issue_status_media',{
     id:{
         field:'issue_status_media_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     description:{
@@ -22,28 +24,28 @@ const issue_status_mediaModel =   sequelize.define('issue_status_media',{
          defaultValue: false 
     },
     issue_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: issueModel,
               key: 'issue_id',
           },
     }, 
     issue_status_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: issue_statusModel,
               key: 'issue_status_id',
           },
     }, 
     gallery_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: galleryModel,
               key: 'gallery_id',
           },
     }, 
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
               key: 'user_id',

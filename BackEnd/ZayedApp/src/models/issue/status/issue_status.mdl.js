@@ -7,8 +7,10 @@ import statusModel from '../../status.mdl';
 const issue_statusModel =   sequelize.define('issue_status',{
     id:{
         field:'issue_status_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     description:{
@@ -22,21 +24,21 @@ const issue_statusModel =   sequelize.define('issue_status',{
          defaultValue: false 
     },
     issue_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: issueModel,
               key: 'issue_id',
           },
     }, 
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
               key: 'user_id',
           },
     }, 
     status_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: statusModel,
               key: 'status_id',

@@ -12,6 +12,8 @@ const removeService = new RemoveService(issueModel);
 
 export const issueService = {
     create : (bdy) => createService.create(bdy),
+    findAll:(Where = {}) => viewService.findAll(Where),
+    sort:(Where = {},limit = 1,sort = 'DESC') => viewService.sort(Where,limit,sort),
     forceRemove : (id) =>  removeService.forceRemove(id)
     
 }
@@ -23,7 +25,7 @@ const issueCtrl = {
         .catch(err=> res.json(configErrMsg(err)))
     },
     view :(req,res)=>{
-        viewService.findBy(req.headers)
+        viewService.findAll(req.headers)
         .then(result=>res.json(configResultData(result)))
         .catch(err=> res.json(configErrMsg(err)))
 
