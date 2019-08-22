@@ -12,7 +12,8 @@ const removeService = new RemoveService(issueModel);
 
 export const issueService = {
     create : (bdy) => createService.create(bdy),
-    forceRemove : (id) => removeService.forceRemove(id)
+    forceRemove : (id) =>  removeService.forceRemove(id)
+    
 }
 
 const issueCtrl = {

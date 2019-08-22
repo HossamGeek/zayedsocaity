@@ -11,6 +11,7 @@ const removeService = new RemoveService(issue_mediaModel);
 
 export const issueMediaService ={
     create : (bdy)=>  createService.create(bdy),
+    createMulti : (bdy)=>  createService.createMulti(bdy),
     forceRemove : (id)=>  removeService.forceRemove(id),
 }
 

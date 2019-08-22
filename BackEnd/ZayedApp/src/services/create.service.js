@@ -7,4 +7,8 @@ export default class CreateService{
                 return this._model.sync({ force    : false })
                 .then(() =>  this._model.create(modelData))
             }
+   createMulti (modelData){
+        return this._model.sync({ force    : false })
+        .then(() =>  this._model.bulkCreate(modelData))
+   }         
 }
