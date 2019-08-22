@@ -1,4 +1,4 @@
-import {Joi,generateCode,uniqId} from '../../../config/imports.config';
+import {Joi,generateCode} from '../../../config/imports.config';
 
 let auth ;
 let searchKeys = new Set(['id','location_id','issue_num','user_id']);
@@ -16,7 +16,6 @@ const issueIsValid = issueData => Joi.validate(issueData, issueSchema);
 const initIssue = issueData => {
     issueData['issue_name'] =  issueData['issue_name'].toLowerCase();
     issueData['issue_num'] = generateCode();
-    issueData['id'] = uniqId('issue!#');
     issueData['user_id'] = auth['id'];
     auth = {};
     return issueData;

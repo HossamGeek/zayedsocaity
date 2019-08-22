@@ -6,8 +6,10 @@ import userModel from '../../user.mdl';
 const issue_commentModel =   sequelize.define('issue_comment',{
     id:{
         field:'issue_comment_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     description:{
@@ -21,14 +23,14 @@ const issue_commentModel =   sequelize.define('issue_comment',{
          defaultValue: false 
     },
     issue_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: issueModel,
               key: 'issue_id',
           },
     }, 
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
               key: 'user_id',

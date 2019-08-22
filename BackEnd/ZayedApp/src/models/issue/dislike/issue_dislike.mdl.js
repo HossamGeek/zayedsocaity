@@ -7,8 +7,10 @@ import reportModel from '../../report.mdl';
 const issue_dislikeModel =   sequelize.define('issue_dislike',{
     id:{
         field:'issue_dislike_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     description:{
@@ -22,21 +24,21 @@ const issue_dislikeModel =   sequelize.define('issue_dislike',{
          defaultValue: false 
     },
     issue_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: issueModel,
               key: 'issue_id',
           },
     }, 
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
               key: 'user_id',
           },
     }, 
     report_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: reportModel,
               key: 'report_id',

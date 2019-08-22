@@ -2,8 +2,10 @@ import {sequelize,DataTypes} from '../../config/DB.config'
 const roleModel =   sequelize.define('role',{
     id:{
         field:'role_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     role_name:{

@@ -35,7 +35,7 @@ const userIsFound = (usrData)=>{
 const loginCtrl = {
     view : (req,res)=>{
         setLoginData(req.body);
-        viewService.findBy(Where)
+        viewService.findAll(Where)
         .then(usrData=>res.json(userIsFound(usrData)))
         .catch(err=>{if(err)res.json(configErrMsg(err))})
     }

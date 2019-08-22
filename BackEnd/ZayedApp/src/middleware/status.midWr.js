@@ -1,4 +1,4 @@
-import {uniqId,Joi} from '../../config/imports.config';
+import {Joi} from '../../config/imports.config';
 
 
 const statusSchemaValidation = {
@@ -11,7 +11,6 @@ const statusIsValid = statusData => Joi.validate(statusData, statusSchema);
 
 const initStatus= (statusBdy) => {
     statusBdy['status_name'] =  statusBdy['status_name'].toLowerCase();
-    statusBdy['id'] = uniqId('status#$');
     return statusBdy;    
 };
 

@@ -5,8 +5,10 @@ import roleModel from './role.mdl';
 const userModel =   sequelize.define('user',{
       id:{
           field:'user_id',
-          type:DataTypes.STRING,
+          type:DataTypes.UUID,
           primaryKey:true,
+          defaultValue: DataTypes.UUIDV4,
+          allowNull: false,
           unique:true
       },
       fname:{
@@ -63,7 +65,7 @@ const userModel =   sequelize.define('user',{
         allowNull: false,
       },
       location_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         references: {
                 model: locationModel,
           
@@ -71,7 +73,7 @@ const userModel =   sequelize.define('user',{
             },
       }, 
       role_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         references: {
                 model: roleModel,
           

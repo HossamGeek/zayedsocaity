@@ -9,7 +9,7 @@ let errMsg = (err) => {return {data:'Transaction Failed',err:err,success:false}}
 
 
 export const statusService = {
-    getStatusByNum :(status_num)=> viewService.findBy({status_num}),
+    getStatusByNum :(status_num)=> viewService.findAll({status_num}),
 }
 
 const statusCtrl = {

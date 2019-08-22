@@ -6,8 +6,10 @@ import userModel from '../user.mdl';
 const issueModel =   sequelize.define('issue',{
     id:{
         field:'issue_id',
-        type:DataTypes.STRING,
+        type:DataTypes.UUID,
         primaryKey:true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         unique:true
     },
     issue_num:{
@@ -34,7 +36,7 @@ const issueModel =   sequelize.define('issue',{
          defaultValue: false 
     },
     location_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: locationModel,
         
@@ -42,7 +44,7 @@ const issueModel =   sequelize.define('issue',{
           },
     }, 
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
               model: userModel,
         

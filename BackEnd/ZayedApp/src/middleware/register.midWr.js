@@ -1,4 +1,4 @@
-import {mac_address,uniqId,hashPassword,Joi,passwordRegex,generateCode} from '../../config/imports.config';
+import {mac_address,hashPassword,Joi,passwordRegex,generateCode} from '../../config/imports.config';
 
 const usrSchemaValidation = {
     username: Joi.string().alphanum().min(3).max(30).required(),
@@ -22,7 +22,6 @@ const initUsr = usrData => {
     Object.keys(usrData).map(k=>{
          usrData[k] = lowerData.has(k) ? usrData[k].toLowerCase() : usrData[k];
     })
-    usrData['id'] = uniqId('usr%@');
     usrData['mac_address'] = mac_address();
     usrData['generate_code'] = generateCode();
     usrData['password'] = hashPassword(usrData['password']);
