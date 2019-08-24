@@ -1,12 +1,11 @@
 import {sequelize,DataTypes} from '../../config/DB.config'
 const statusModel =   sequelize.define('status',{
     id:{
-        field:'status_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     status_name:{
         field:'status_name',

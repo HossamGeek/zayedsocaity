@@ -1,7 +1,6 @@
 import {sequelize,DataTypes} from '../../config/DB.config'
 const roleModel =   sequelize.define('role',{
     id:{
-        field:'role_id',
         type:DataTypes.UUID,
         primaryKey:true,
         defaultValue: DataTypes.UUIDV4,
@@ -31,7 +30,8 @@ const roleModel =   sequelize.define('role',{
     }
     }, {
       tableName: 'role',
-      freezeTableName: true
+      freezeTableName: true,
     });
 
+   
 export  default roleModel;

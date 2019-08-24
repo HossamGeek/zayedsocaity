@@ -6,12 +6,11 @@ import statusModel from '../../status.mdl';
 
 const issue_statusModel =   sequelize.define('issue_status',{
     id:{
-        field:'issue_status_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     description:{
       field:'description',
@@ -27,21 +26,21 @@ const issue_statusModel =   sequelize.define('issue_status',{
       type: DataTypes.UUID,
       references: {
               model: issueModel,
-              key: 'issue_id',
+              key: 'id',
           },
     }, 
     user_id: {
       type: DataTypes.UUID,
       references: {
               model: userModel,
-              key: 'user_id',
+              key: 'id',
           },
     }, 
     status_id: {
       type: DataTypes.UUID,
       references: {
               model: statusModel,
-              key: 'status_id',
+              key: 'id',
           },
     },
     createdAt: {
@@ -58,5 +57,10 @@ const issue_statusModel =   sequelize.define('issue_status',{
       tableName: 'issue_status',
       freezeTableName: true
     });
+
+    issue_statusModel.belongsTo(userModel,
+      { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
+    issue_statusModel.belongsTo(statusModel,
+      { foreignKey: 'status_id',targetKey: 'id',sourceKey:'status_id',constraints: false});
 
 export  default issue_statusModel;

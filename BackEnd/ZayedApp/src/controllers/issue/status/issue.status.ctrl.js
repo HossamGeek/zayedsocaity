@@ -4,6 +4,7 @@ import {configResultData} from "../../helper/view.hlp";
 import ViewService from '../../../services/view.service';
 import CreateService from '../../../services/create.service';
 import RemoveService from '../../../services/remove.service';
+import issueModel from '../../../models/issue/issue.mdl';
 
 const viewService = new ViewService(issue_statusModel);
 const createService = new CreateService(issue_statusModel);
@@ -23,7 +24,7 @@ const issueStatusCtrl = {
         .catch(err=> res.json(configErrMsg(err)))
     },
     view :(req,res)=>{
-        viewService.findAll(req.headers)
+        viewService.sort({},[{model:issueModel}])
         .then(result=>res.json(configResultData(result)))
         .catch(err=> res.json(configErrMsg(err)))
 

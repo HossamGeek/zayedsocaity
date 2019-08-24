@@ -1,11 +1,12 @@
-import issueModel from '../../models/issue/issue.mdl';
 import RemoveService from '../../services/remove.service';
 import CreateService from '../../services/create.service';
 import ViewService from '../../services/view.service';
 import { configErrMsg } from '../helper/err.config.hlp';
 import {configResultData} from "../helper/view.hlp";
+import issueModel from '../../models/issue/issue.mdl';
+import includeOf from '../../models/init/included.init';
 
-
+const includeOfIssue = includeOf.issueModel;
 const viewService = new ViewService(issueModel);
 const createService = new CreateService(issueModel);
 const removeService = new RemoveService(issueModel);
@@ -20,14 +21,19 @@ export const issueService = {
 
 const issueCtrl = {
     create : (req,res)=>{
-        issueService.create(req.body)
+        createService.create(req.body)
         .then(result=>res.json({data:result,success:true}))
-        .catch(err=> res.json(configErrMsg(err)))
+        .catch(err=> {
+            console.log(err);
+            res.json(configErrMsg(err))})
     },
     view :(req,res)=>{
-        viewService.findAll(req.headers)
+        viewService.sort(req.headers,includeOfIssue)
         .then(result=>res.json(configResultData(result)))
-        .catch(err=> res.json(configErrMsg(err)))
+        .catch(err=>{
+            console.log(err)
+            res.json(configErrMsg(err))
+        } )
 
     }
 

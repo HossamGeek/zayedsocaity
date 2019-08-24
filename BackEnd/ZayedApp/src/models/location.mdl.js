@@ -1,7 +1,7 @@
 import {sequelize,DataTypes} from '../../config/DB.config';
 const locationModel =   sequelize.define('location',{
     id:{
-        field:'location_id',
+        field:'id',
         type:DataTypes.UUID,
         primaryKey:true,
         defaultValue: DataTypes.UUIDV4,
@@ -33,5 +33,6 @@ const locationModel =   sequelize.define('location',{
       tableName: 'location',
       freezeTableName: true
     });
+
 
 export  default locationModel;

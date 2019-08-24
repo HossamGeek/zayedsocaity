@@ -3,17 +3,20 @@ import {Sequelize} from './imports.config';
 let sequelize;
 const env = process.env;
 
+const define = {   
+       define: {
+        charset: 'utf8',
+        collate: 'utf8_general_ci', 
+        timestamps: true,
+        freezeTableName: true
+        }
+    };
 
-if (process.env.NODE_ENV === 'production')    {
+    if (process.env.NODE_ENV === 'production')    {
     
         sequelize = new Sequelize(env.dbServerName,env.dbServerUser,env.dbServerPass,
             {
-                    define: {
-                    charset: 'utf8',
-                    collate: 'utf8_general_ci', 
-                    timestamps: true
-                    },
-                
+                    define,
                     host: env.dbServerHost,
                     port:env.dbServerPort,
                     dialect: 'mysql',
@@ -22,12 +25,7 @@ if (process.env.NODE_ENV === 'production')    {
     } else {
         sequelize = new Sequelize(env.dbName,env.dbUsername,env.dbPass,
             {
-                    define: {
-                    charset: 'utf8',
-                    collate: 'utf8_general_ci', 
-                    timestamps: true
-                    },
-                
+                   define,     
                     host: env.dbHost,
                     port:env.dbPort,
                     dialect: 'mysql',

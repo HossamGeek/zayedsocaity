@@ -5,12 +5,11 @@ import userModel from '../user.mdl';
 
 const issue_mediaModel =   sequelize.define('issue_media',{
     id:{
-        field:'issue_media_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     description:{
       field:'description',
@@ -26,21 +25,21 @@ const issue_mediaModel =   sequelize.define('issue_media',{
       type: DataTypes.UUID,
       references: {
               model: issueModel,
-              key: 'issue_id',
+              key: 'id',
           },
     }, 
     user_id: {
       type: DataTypes.UUID,
       references: {
               model: userModel,
-              key: 'user_id',
+              key: 'id',
           },
     }, 
     gallery_id: {
       type: DataTypes.UUID,
       references: {
               model: galleryModel,
-              key: 'gallery_id',
+              key: 'id',
           },
     }, 
     createdAt: {
@@ -57,5 +56,10 @@ const issue_mediaModel =   sequelize.define('issue_media',{
       tableName: 'issue_media',
       freezeTableName: true
     });
+
+    issue_mediaModel.belongsTo(userModel,
+      { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
+    issue_mediaModel.belongsTo(galleryModel,
+      { foreignKey: 'gallery_id',targetKey: 'id',sourceKey:'gallery_id',constraints: false});
 
 export  default issue_mediaModel;

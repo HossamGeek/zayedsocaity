@@ -3,7 +3,6 @@ import userModel from './user.mdl';
 
 const galleryModel =   sequelize.define('role',{
     id:{
-        field:'gallery_id',
         type:DataTypes.UUID,
         primaryKey:true,
         defaultValue: DataTypes.UUIDV4,
@@ -14,7 +13,7 @@ const galleryModel =   sequelize.define('role',{
       type: DataTypes.UUID,
       references: {
               model: userModel,
-              key: 'user_id',
+              key: 'id',
           },
     }, 
     mime_type:{
@@ -46,5 +45,7 @@ const galleryModel =   sequelize.define('role',{
       tableName: 'gallery',
       freezeTableName: true
     });
+
+    galleryModel.belongsTo(userModel, { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
 
 export  default galleryModel;

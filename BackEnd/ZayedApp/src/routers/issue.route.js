@@ -2,6 +2,7 @@ import {midParse,express} from '../../config/imports.config';
 import issueMidWr from '../middleware/issue/issue.midWr';
 import issueCtrl from '../controllers/issue/issue.ctrl';
 import IssueForm from '../controllers/issue/issue.create.form';
+import issueStatusCtrl from '../controllers/issue/status/issue.status.ctrl';
 
 
 const issueRouter = express.Router();
@@ -15,7 +16,7 @@ issueRouter.route('/new')
     .get(issueForm.view);
 
 
-
+ issueRouter.get('/status',issueStatusCtrl.view);
 issueRouter.get('/usr',issueMidWr.userSearch,issueCtrl.view);
 issueRouter.get('/id',issueMidWr.customSearch,issueCtrl.view);
 issueRouter.get('/location_id',issueMidWr.customSearch,issueCtrl.view);

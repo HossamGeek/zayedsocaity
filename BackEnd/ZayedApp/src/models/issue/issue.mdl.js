@@ -1,16 +1,17 @@
 import {sequelize,DataTypes} from '../../../config/DB.config';
 import locationModel from '../location.mdl';
 import userModel from '../user.mdl';
+import issue_statusModel from './status/issue_status.mdl';
+import issue_mediaModel from './issue_media.mdl';
 
 
 const issueModel =   sequelize.define('issue',{
     id:{
-        field:'issue_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     issue_num:{
       field:'issue_num',
@@ -40,14 +41,14 @@ const issueModel =   sequelize.define('issue',{
       references: {
               model: locationModel,
         
-              key: 'location_id',
+              key: 'id',
           },
     }, 
     user_id: {
       type: DataTypes.UUID,
       references: {
               model: userModel,
-              key: 'user_id',
+              key: 'id',
           },
     }, 
     createdAt: {
@@ -59,10 +60,29 @@ const issueModel =   sequelize.define('issue',{
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
-      }
+      },
+       
     }, {
       tableName: 'issue',
-      freezeTableName: true
+      freezeTableName: true,
+      
     });
+
+    issueModel.hasMany(issue_statusModel, { foreignKey: 'issue_id',as:'issue_status'});
+    issueModel.hasMany(issue_mediaModel,{ foreignKey: 'issue_id'})
+    issueModel.belongsTo(userModel, { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false})
+
+    issueModel.belongsTo(locationModel, { foreignKey: 'location_id',targetKey: 'id',sourceKey:'location_id',constraints: false})
+    
+
+    
+    
+
+//     issueModel.associate = (models)=>{
+//       models.user.hasMany(issueModel, { foreignKey: 'user_id'})
+//  issueModel.belongsToMany(models.location, { foreignKey: 'location_id'});
+//  issueModel.hasMany(models.issue_media);
+//     }
+  //  issueModel.belongsTo(userModel, { foreignKey: 'user_id'});
 
 export  default issueModel;

@@ -2,9 +2,9 @@ import {sequelize,DataTypes} from '../../config/DB.config';
 import locationModel from './location.mdl';
 import roleModel from './role.mdl';
 
-const userModel =   sequelize.define('user',{
+
+const userModel =  sequelize.define('user',{
       id:{
-          field:'user_id',
           type:DataTypes.UUID,
           primaryKey:true,
           defaultValue: DataTypes.UUIDV4,
@@ -66,19 +66,21 @@ const userModel =   sequelize.define('user',{
       },
       location_id: {
         type: DataTypes.UUID,
+        allowNull: false,
         references: {
-                model: locationModel,
-          
-                key: 'location_id',
-            },
+          model: locationModel,
+    
+          key: 'id',
+      },
       }, 
       role_id: {
         type: DataTypes.UUID,
+        allowNull: false,
         references: {
-                model: roleModel,
-          
-                key: 'role_id',
-            },
+          model: roleModel,
+    
+          key: 'id',
+      },
       },  
       male:{
         field:'male',
@@ -101,7 +103,14 @@ const userModel =   sequelize.define('user',{
 
   }, {
       tableName: 'user',
-      freezeTableName: true
+      freezeTableName: true,
     });
+
+    userModel.belongsTo(roleModel, { foreignKey: 'role_id',targetKey: 'id',sourceKey:'role_id'})
+    userModel.belongsTo(locationModel, { foreignKey: 'location_id' ,targetKey: 'id',sourceKey:'location_id'});
+    
+
+  
+
 
 export  default userModel;
