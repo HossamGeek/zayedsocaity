@@ -1,3 +1,5 @@
+import {Joi} from '../../../config/imports.config';
+
 const issueStatusSchemaValidation = {
     status_id: Joi.string().required(),
     user_id: Joi.string().required(),

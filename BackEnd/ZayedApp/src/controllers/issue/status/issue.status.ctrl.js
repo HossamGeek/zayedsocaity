@@ -5,6 +5,8 @@ import ViewService from '../../../services/view.service';
 import CreateService from '../../../services/create.service';
 import RemoveService from '../../../services/remove.service';
 import issueModel from '../../../models/issue/issue.mdl';
+import { issueStatusMediaService } from './issue_status_media.ctrl';
+
 
 const viewService = new ViewService(issue_statusModel);
 const createService = new CreateService(issue_statusModel);
@@ -25,10 +27,10 @@ const removeService = new RemoveService(issue_statusModel);
 
 
 
-export const issueStatusService = {
-    create : (bdy) =>  createService.create(bdy),
-    forceRemove : (id) =>  removeService.forceRemove(id),
-}
+    export const issueStatusService = {
+        create : (bdy) =>  createService.create(bdy),
+        forceRemove : (id) =>  removeService.forceRemove(id),
+    }
 
 const mediaIsValid = (files)=>{
     for(let x in files){
@@ -39,7 +41,7 @@ const mediaIsValid = (files)=>{
     }
 }
 
-const created = (bdy)=>{
+const createIssueStatusSequence = (bdy)=>{
     let mediaFiles = [];
     return issueStatusService.create(bdy).then(status=>{
         for(let x in files){
@@ -51,7 +53,7 @@ const created = (bdy)=>{
                 user_id:status.user_id
             }]
             if(files.length == parseInt(x))
-               return {} //add media             
+               return issueStatusMediaService.createMulti(mediaFiles) //add media             
         }
     })
 
@@ -61,8 +63,13 @@ const issueStatusCtrl = {
     create : (req,res)=>{
         let files = req.body.files;
         if(files || files.length){
-              mediaIsValid(files).success ? res.json() :res.json(mediaIsValid(files))  
-        }else issueStatusService.create(req.body)
+              mediaIsValid(files).success ?
+               createIssueStatusSequence(req.body)
+               .then(result=>res.json({data:result,success:true}))
+               .catch(err=> res.json(configErrMsg(err))) 
+               :res.json(mediaIsValid(files))  
+        }else
+        issueStatusService.create(req.body)
         .then(result=>res.json({data:result,success:true}))
         .catch(err=> res.json(configErrMsg(err)))
     },
