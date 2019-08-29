@@ -38,14 +38,16 @@ const issueModel =   sequelize.define('issue',{
     },
     location_id: {
       type: DataTypes.UUID,
-      references: {
-              model: locationModel,
-        
-              key: 'id',
-          },
+      allowNull: false,
+        references: {
+          model: locationModel,
+    
+          key: 'id',
+      },
     }, 
     user_id: {
       type: DataTypes.UUID,
+      allowNull: false,
       references: {
               model: userModel,
               key: 'id',
@@ -72,7 +74,7 @@ const issueModel =   sequelize.define('issue',{
     issueModel.hasMany(issue_mediaModel,{ foreignKey: 'issue_id'})
     issueModel.belongsTo(userModel, { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false})
 
-    issueModel.belongsTo(locationModel, { foreignKey: 'location_id',targetKey: 'id',sourceKey:'location_id',constraints: false})
+    issueModel.belongsTo(locationModel, { foreignKey: 'location_id' ,targetKey: 'id',sourceKey:'location_id',constraints: false})
     
 
     

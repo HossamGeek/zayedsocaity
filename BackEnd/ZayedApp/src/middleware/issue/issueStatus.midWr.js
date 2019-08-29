@@ -3,7 +3,7 @@ import {Joi} from '../../../config/imports.config';
 const issueStatusSchemaValidation = {
     status_id: Joi.string().required(),
     user_id: Joi.string().required(),
-    status_id: Joi.string().required(),
+    issue_id: Joi.string().required(),
     description: Joi.string().replace(/[<>]/g, ""),
     files:Joi.array()
 };
@@ -32,7 +32,7 @@ const issueStatusMidWr = {
             let msgErr = haveErr['details'][0]['message'];
             return res.json({data:msgErr,success:false});
         }
-        req.body = (issueBdy);
+        req.body = (statusBdy);
         next();
     }
 }

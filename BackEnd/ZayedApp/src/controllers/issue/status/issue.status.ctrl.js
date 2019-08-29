@@ -12,66 +12,88 @@ const viewService = new ViewService(issue_statusModel);
 const createService = new CreateService(issue_statusModel);
 const removeService = new RemoveService(issue_statusModel);
 
-// const mediaUpload = (files)=>
-// {
-//     //! files have data and must be contain [{id}] 
-//     //! then >> push these files data to media data
-//     files || files.length ? files.map(file=>{
-//         file.id ? mediaFiles.push({
-//             issue_id,
-//             user_id,
-//             gallery_id: file.id
-//         }) : '';
-//     }) : [];
-// }
 
+let  statusIssueID = '';
 
-
-    export const issueStatusService = {
+export const issueStatusService = {
         create : (bdy) =>  createService.create(bdy),
         forceRemove : (id) =>  removeService.forceRemove(id),
-    }
-
-const mediaIsValid = (files)=>{
-    for(let x in files){
-        if(!files[x].id || !files[x].id.length)
-            return ({data:'files is array and must contain media in [id , description]',success:false});
-        if(files.length == parseInt(x))
-            return({success:true});            
-    }
 }
 
-const createIssueStatusSequence = (bdy)=>{
-    let mediaFiles = [];
-    return issueStatusService.create(bdy).then(status=>{
+const rollback = (id) =>issueStatusService.forceRemove(id);
+
+const validation = {
+    requestIsHaveFiles : (files)=>{
+        if(files && files.length) return {success:true}
+        return {success:false}
+    },
+    filesIsValid : (files)=>{
         for(let x in files){
-            mediaFiles.push[{
-                issue_id:status.issue_id  ,
-                issue_status_id:status.id,
-                gallery_id : file.id,
-                description:file.description,
-                user_id:status.user_id
-            }]
-            if(files.length == parseInt(x))
-               return issueStatusMediaService.createMulti(mediaFiles) //add media             
+            if(!files[x].id || !files[x].id.length)
+                return ({data:'files is array and must contain media in [id , description]',success:false});
+            if(files.length-1 === parseInt(x))
+                 return({success:true});           
         }
-    })
+    }
+};
 
+const initStatusMediaForDataBase = (requestFiles = [],StatusData = {}) =>
+    {   
+        let mediaFiles = [];
+        let requiredMediaData = {
+            issue_id:StatusData.issue_id  ,
+            issue_status_id:StatusData.id,
+            user_id:StatusData.user_id
+        };
+
+        for(let x in requestFiles){
+            let statusMediaData = Object.assign(requiredMediaData,{
+                gallery_id : requestFiles[x].id,
+                description:requestFiles[x].description
+            });
+            mediaFiles.push(statusMediaData);
+            if(requestFiles.length-1 === parseInt(x)) return ({data:mediaFiles,success:true})        
+        }
+     }
+
+
+const issueStatus = {
+    create : (bdy)=> issueStatusService.create(bdy),
+    media : (mediaFiles)=> issueStatusMediaService.create(mediaFiles),
+    withMedia : (bdy) =>{
+        let files =bdy.files;
+        return issueStatus.create(bdy).then(status=>{
+            statusIssueID = status.id;
+            let mediaFiles = initStatusMediaForDataBase(files,status);
+            if(mediaFiles.success)
+               return  issueStatusMediaService.create(mediaFiles.data) //add media             
+        })
+    }
 }
+
+
+
 
 const issueStatusCtrl = {
     create : (req,res)=>{
-        let files = req.body.files;
-        if(files || files.length){
-              mediaIsValid(files).success ?
-               createIssueStatusSequence(req.body)
-               .then(result=>res.json({data:result,success:true}))
-               .catch(err=> res.json(configErrMsg(err))) 
-               :res.json(mediaIsValid(files))  
-        }else
-        issueStatusService.create(req.body)
-        .then(result=>res.json({data:result,success:true}))
-        .catch(err=> res.json(configErrMsg(err)))
+        let statusBdy = req.body;
+        let files = statusBdy.files;
+        let reqHaveFiles =  validation.requestIsHaveFiles(files).success;
+        let filesIsValid = validation.filesIsValid(files);
+
+        if(reqHaveFiles){
+            filesIsValid.success? 
+                issueStatus.withMedia(statusBdy)
+                    .then(result=>res.json({data:result,success:true}))
+                    .catch(err=>{
+                        rollback({id:statusIssueID});
+                        res.json(configErrMsg(err))
+                    })
+            : res.json(filesIsValid);
+        }else issueStatus.create(statusBdy)
+                .then(result=>res.json({data:result,success:true}))
+                .catch(err=> res.json(configErrMsg(err)))
+       
     },
     view :(req,res)=>{
         viewService.sort({},[{model:issueModel}])

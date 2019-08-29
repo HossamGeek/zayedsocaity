@@ -2,6 +2,7 @@ import {sequelize,DataTypes} from '../../../../config/DB.config';
 import issueModel from '../issue.mdl';
 import userModel from '../../user.mdl';
 import statusModel from '../../status.mdl';
+//import issue_status_mediaModel from './issue_status_media.mdl';
 
 
 const issue_statusModel =   sequelize.define('issue_status',{
@@ -58,9 +59,12 @@ const issue_statusModel =   sequelize.define('issue_status',{
       freezeTableName: true
     });
 
+    
+
     issue_statusModel.belongsTo(userModel,
       { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
     issue_statusModel.belongsTo(statusModel,
       { foreignKey: 'status_id',targetKey: 'id',sourceKey:'status_id',constraints: false});
+      
 
 export  default issue_statusModel;
