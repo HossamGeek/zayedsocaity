@@ -1,6 +1,8 @@
 import issue_likeModel from "../../../models/issue/like/issue_like.mdl";
 import CreateService from '../../../services/create.service';
 import RemoveService from '../../../services/remove.service';
+import {issueDisLikeService} from "../dislike/issue_dislike.ctrl";
+
 
 const createService = new CreateService(issue_likeModel);
 const removeService = new RemoveService(issue_likeModel);
@@ -14,6 +16,7 @@ export const issueLikeService = {
 
 const issueLikeCtrl = {
     pushUser :  (req,res) => {
+        issueDisLikeService.pull({user_id:req.headers['user_id']});
         issueLikeService.push(req.headers)
             .then(result=> res.json({data:result,success:true}))
             .catch(err=>res.json({data:"transaction failed",success:false,err}))

@@ -75,7 +75,7 @@ const issueMidWr = {
         let report_id = searchValidator('report_id',req.headers['report_id']);
         if(report_id.err)return res.json({data:report_id.data,success:false})
         req.headers = {user_id:auth['id'],report_id };
-    next();
+        next();
     },
     issueDisLikeData: (req,res,next)=>{
         auth = req.session['authorization'];
