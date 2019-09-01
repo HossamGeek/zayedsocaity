@@ -3,6 +3,8 @@ import locationModel from '../location.mdl';
 import userModel from '../user.mdl';
 import issue_statusModel from './status/issue_status.mdl';
 import issue_mediaModel from './issue_media.mdl';
+import issue_likeModel from './like/issue_like.mdl';
+import issue_dislikeModel from './dislike/issue_dislike.mdl';
 
 
 const issueModel =   sequelize.define('issue',{
@@ -70,21 +72,30 @@ const issueModel =   sequelize.define('issue',{
       
     });
 
-    issueModel.hasMany(issue_statusModel, { foreignKey: 'issue_id',as:'issue_status'});
-    issueModel.hasMany(issue_mediaModel,{ foreignKey: 'issue_id'})
-    issueModel.belongsTo(userModel, { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false})
+    issueModel.hasMany(issue_dislikeModel, 
+      { foreignKey: 'issue_id',
+      constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
 
-    issueModel.belongsTo(locationModel, { foreignKey: 'location_id' ,targetKey: 'id',sourceKey:'location_id',constraints: false})
+    issueModel.hasMany(issue_statusModel, 
+      { foreignKey: 'issue_id',as:'issue_status',
+      constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
+
+    issueModel.hasMany(issue_likeModel, 
+        { foreignKey: 'issue_id',
+        constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
+
+    issueModel.hasMany(issue_mediaModel,{ foreignKey: 'issue_id',
+       constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
+
+    issueModel.belongsTo(userModel, 
+      { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',
+      constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
+
+    issueModel.belongsTo(locationModel,
+       { foreignKey: 'location_id' ,targetKey: 'id',sourceKey:'location_id',
+       constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
     
 
     
-    
-
-//     issueModel.associate = (models)=>{
-//       models.user.hasMany(issueModel, { foreignKey: 'user_id'})
-//  issueModel.belongsToMany(models.location, { foreignKey: 'location_id'});
-//  issueModel.hasMany(models.issue_media);
-//     }
-  //  issueModel.belongsTo(userModel, { foreignKey: 'user_id'});
 
 export  default issueModel;

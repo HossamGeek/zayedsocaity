@@ -106,8 +106,10 @@ const userModel =  sequelize.define('user',{
       freezeTableName: true,
     });
 
-    userModel.belongsTo(roleModel, { foreignKey: 'role_id',targetKey: 'id',sourceKey:'role_id'})
-    userModel.belongsTo(locationModel, { foreignKey: 'location_id' ,targetKey: 'id',sourceKey:'location_id'});
+    userModel.belongsTo(roleModel, { foreignKey: 'role_id',targetKey: 'id',sourceKey:'role_id',
+    constraints: true, onDelete: 'restrict', onUpdate: 'restrict' })
+    userModel.belongsTo(locationModel, { foreignKey: 'location_id' ,targetKey: 'id',sourceKey:'location_id',
+    constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
     
 
   

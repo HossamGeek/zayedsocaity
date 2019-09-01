@@ -44,11 +44,11 @@ const transaction = {
         issue:()=>issueService.forceRemove({id:issue_id}),
         media:()=>issueMediaService.forceRemove({issue_id}),
         status:()=>issueStatusService.forceRemove({issue_id}),
-        rollback:()=>{
+        rollback: function (){
             return Promise.all([
-                transaction.remove.status(),
-                transaction.remove.media(),
-                transaction.remove.issue()  
+                this.remove.status(),
+                this.remove.media(),
+                this.remove.issue()  
             ])
         }
     },
@@ -62,14 +62,14 @@ const concurrence = {
             //? second >> create status and media 
                 //* if media have data >> create #status and #media
                 //! if media not have data >> create #status only  
-            issue : (bdy)=>{
+            issue : function (bdy) {
                 return transaction.create.issue(bdy).then(issue=>{
                     bdy["issue_id"] = issue.id;
                     let childData = prepare.childIssueData(bdy);
-                    return concurrence.create.childIssue(childData);
+                    return this.childIssue(childData);
                 })
             },
-            childIssue: (bdy)=>{
+            childIssue:function (bdy){
                 if(mediaFiles.length)  
                     return Promise.all([
                         transaction.create.status(bdy),

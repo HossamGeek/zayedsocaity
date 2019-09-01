@@ -1,16 +1,15 @@
-import {sequelize,DataTypes} from '../../../config/DB.config'
+import {sequelize,DataTypes} from '../../../../config/DB.config';
 import issueModel from '../issue.mdl';
 import userModel from '../../user.mdl';
 
 
-const issue_rateModel =   sequelize.define('issue_rate',{
+const issue_likeModel =   sequelize.define('issue_like',{
     id:{
-        field:'issue_rate_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     description:{
       field:'description',
@@ -26,14 +25,14 @@ const issue_rateModel =   sequelize.define('issue_rate',{
       type: DataTypes.UUID,
       references: {
               model: issueModel,
-              key: 'issue_id',
+              key: 'id',
           },
     }, 
     user_id: {
       type: DataTypes.UUID,
       references: {
               model: userModel,
-              key: 'user_id',
+              key: 'id',
           },
     }, 
     createdAt: {
@@ -47,8 +46,8 @@ const issue_rateModel =   sequelize.define('issue_rate',{
         defaultValue: DataTypes.NOW
       }
     }, {
-      tableName: 'issue_rate',
+      tableName: 'issue_like',
       freezeTableName: true
     });
 
-export  default issue_rateModel;
+export  default issue_likeModel;

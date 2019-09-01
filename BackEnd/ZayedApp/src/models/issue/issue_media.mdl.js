@@ -57,9 +57,11 @@ const issue_mediaModel =   sequelize.define('issue_media',{
       freezeTableName: true
     });
 
-    issue_mediaModel.belongsTo(userModel,
-      { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
+   issue_mediaModel.belongsTo(userModel,
+    { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',
+    constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
     issue_mediaModel.belongsTo(galleryModel,
-      { foreignKey: 'gallery_id',targetKey: 'id',sourceKey:'gallery_id',constraints: false});
+      { foreignKey: 'gallery_id',targetKey: 'id',sourceKey:'gallery_id',
+      constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
 
 export  default issue_mediaModel;

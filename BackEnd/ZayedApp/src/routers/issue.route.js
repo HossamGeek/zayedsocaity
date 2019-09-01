@@ -4,6 +4,7 @@ import issueCtrl from '../controllers/issue/issue.ctrl';
 import IssueForm from '../controllers/issue/issue.create.form';
 import issueStatusCtrl from '../controllers/issue/status/issue.status.ctrl';
 import issueStatusMidWr from '../middleware/issue/issueStatus.midWr';
+import issueLikeCtrl from '../controllers/issue/like/issue_like.ctrl';
 
 
 const issueRouter = express.Router();
@@ -17,9 +18,15 @@ issueRouter.route('/new')
     .get(issueForm.view);
 
 
- issueRouter.route('/status')
+issueRouter.route('/status')
  .post(issueStatusMidWr.checkIssueStatusBody,issueStatusCtrl.create)
  .get(issueStatusCtrl.view);
+
+
+ issueRouter.route('/like')
+     .post(issueMidWr.issueLikeData,issueLikeCtrl.pullUser);
+
+
 issueRouter.get('/usr',issueMidWr.userSearch,issueCtrl.view);
 issueRouter.get('/id',issueMidWr.customSearch,issueCtrl.view);
 issueRouter.get('/location_id',issueMidWr.customSearch,issueCtrl.view);

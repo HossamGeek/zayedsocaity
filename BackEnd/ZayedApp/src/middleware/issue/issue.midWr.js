@@ -22,7 +22,7 @@ const initIssue = issueData => {
 };
 
 const searchValidator = (searchKey,searchValue)=>{
-        return  searchValue ? searchValue :{data:searchKey+' is not define',err:true }    
+        return  searchValue && searchValue.length  ? searchValue :{data:searchKey+' is not define',err:true }    
 }
 const customSearch = (headers) => {
     let searchData ={};
@@ -32,6 +32,8 @@ const customSearch = (headers) => {
     });
     return searchData;
 }
+
+
 
 const issueMidWr = {
     //?? validation issue data before create
@@ -48,19 +50,44 @@ const issueMidWr = {
     },
     userSearch:(req,res,next)=>{
         auth = req.session['authorization'];
-        let headrs = customSearch(req.headers);
-        headrs['user_id'] = headrs['user_id'] ? headrs['user_id'] : auth['id'];          
-        req.headers = headrs;
+        let headers = customSearch(req.headers);
+        headers['user_id'] = headers['user_id'] ? headers['user_id'] : auth['id'];          
+        req.headers = headers;
         next();
     },
     customSearch:(req,res,next)=>{
-        let searchKey = req.path.split('/')[1];
-        let headrs = customSearch(req.headers)
-            ,searchId = searchValidator(searchKey,headrs[searchKey]);   
+        let searchKey = req.path.split('/')[1]; //! path => /locationId >> searchKey = locationId
+        let headers = customSearch(req.headers)
+            ,searchId = searchValidator(searchKey,headers[searchKey]);   
         if(searchId.err) return res.json(searchId);
-        req.headers = headrs;
+        req.headers = headers;
         next();
     },
+    issueLikeData: (req,res,next)=>{
+        auth = req.session['authorization'];
+        let issue_id = searchValidator('issue_id',req.headers['issue_id']);
+        if(issue_id.err)return res.json({data:issue_id.data,success:false})
+        req.headers = {user_id:auth['id'],issue_id};
+        next();
+    },
+    issueReportData : (req,res,next)=>{
+        auth = req.session['authorization'];
+        let report_id = searchValidator('report_id',req.headers['report_id']);
+        if(report_id.err)return res.json({data:report_id.data,success:false})
+        req.headers = {user_id:auth['id'],report_id };
+    next();
+    },
+    issueDisLikeData: (req,res,next)=>{
+        auth = req.session['authorization'];
+        let issue_id = searchValidator('issue_id',req.headers['issue_id']);
+        let report_id = searchValidator('report_id',req.headers['report_id']);
+        if(issue_id.err)return res.json({data:issue_id.data,success:false})
+        if(report_id.err)return res.json({data:report_id.data,success:false})
+        req.headers = {user_id:auth['id'],issue_id,  report_id    };
+        next();
+    }
+
+
    
 
 };

@@ -71,17 +71,10 @@ const issue_status_mediaModel =   sequelize.define('issue_status_media',{
     });
 
     
-    issue_status_mediaModel.hasMany( issue_statusModel,
-      { foreignKey: 'issue_status_id',targetKey: 'id',sourceKey:'issue_status_id',constraints: false});
-
+   
     issue_status_mediaModel.belongsTo(galleryModel,
-      { foreignKey: 'gallery_id',targetKey: 'id',sourceKey:'gallery_id',constraints: false});
-
-    issue_status_mediaModel.hasMany(issueModel ,
-        { foreignKey: 'issue_id',targetKey: 'id',sourceKey:'issue_id',constraints: false});
-      
-    issue_status_mediaModel.hasMany(userModel ,
-          { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
+      { foreignKey: 'gallery_id',targetKey: 'id',sourceKey:'gallery_id',
+        constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
       
 
 export  default issue_status_mediaModel;

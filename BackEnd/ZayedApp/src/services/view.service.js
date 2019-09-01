@@ -6,7 +6,7 @@ export default class ViewService {
          this._model = model;   
     }
     findAll (Where = {}) 
-        {return this._model.findAll({where : Where})}
+        { return this._model.findAll({where : Where})}
 
     compare (compareData,Where ={})
         {return this._model.findAll({where   : Where,[Op.or]:compareData})}
@@ -15,10 +15,10 @@ export default class ViewService {
         {return this._model.count({where   : Where})}
     
     
-    sort (Where = {},include = [],limit = 1,sort = 'DESC')    
+    sort (Where = {},include = [],limit = null,sort = 'DESC')    
         {
             return this._model.findAll({
-                limit,
+                limit ,
                 include,
                 where : Where,
                 order: [ [ 'createdAt', sort ]]

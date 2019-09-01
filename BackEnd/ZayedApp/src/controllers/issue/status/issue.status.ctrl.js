@@ -4,8 +4,8 @@ import {configResultData} from "../../helper/view.hlp";
 import ViewService from '../../../services/view.service';
 import CreateService from '../../../services/create.service';
 import RemoveService from '../../../services/remove.service';
-import issueModel from '../../../models/issue/issue.mdl';
 import { issueStatusMediaService } from './issue_status_media.ctrl';
+import includeOf from '../../../models/init/included.init';
 
 
 const viewService = new ViewService(issue_statusModel);
@@ -13,7 +13,7 @@ const createService = new CreateService(issue_statusModel);
 const removeService = new RemoveService(issue_statusModel);
 
 
-let  statusIssueID = '';
+let  statusDataDB = {};
 
 export const issueStatusService = {
         create : (bdy) =>  createService.create(bdy),
@@ -22,83 +22,88 @@ export const issueStatusService = {
 
 const rollback = (id) =>issueStatusService.forceRemove(id);
 
-const validation = {
-    requestIsHaveFiles : (files)=>{
-        if(files && files.length) return {success:true}
-        return {success:false}
-    },
-    filesIsValid : (files)=>{
-        for(let x in files){
-            if(!files[x].id || !files[x].id.length)
-                return ({data:'files is array and must contain media in [id , description]',success:false});
-            if(files.length-1 === parseInt(x))
-                 return({success:true});           
-        }
+const filesValidator = {
+    filesIsFound : (files) => (files && files.length) ? ({success:true}) : {success:false},
+    filesIsValid : (files) => {
+        let err = 'files is array and must contain media in [id(required),description(optional)]'
+        ,valid = files.every(file => file.id  && file.id.length);
+        return valid ? ({success:true}) : ({err ,success:false});
+       
     }
 };
 
-const initStatusMediaForDataBase = (requestFiles = [],StatusData = {}) =>
-    {   
-        let mediaFiles = [];
-        let requiredMediaData = {
-            issue_id:StatusData.issue_id  ,
-            issue_status_id:StatusData.id,
-            user_id:StatusData.user_id
-        };
+const initStatusMediaForDataBase = 
+    (requestFiles = [],StatusData = {}) =>
+            {   
+                let mediaFiles = [];
+                let requiredMediaData = {
+                    issue_id:StatusData.issue_id  ,
+                    issue_status_id:StatusData.id,
+                    user_id:StatusData.user_id
+                };
 
-        for(let x in requestFiles){
-            let statusMediaData = Object.assign(requiredMediaData,{
-                gallery_id : requestFiles[x].id,
-                description:requestFiles[x].description
-            });
-            mediaFiles.push(statusMediaData);
-            if(requestFiles.length-1 === parseInt(x)) return ({data:mediaFiles,success:true})        
-        }
-     }
+                for(let x in requestFiles){
+                    let statusMediaData = Object.assign(requiredMediaData,{
+                        gallery_id : requestFiles[x].id,
+                        description:requestFiles[x].description
+                    });
+                    mediaFiles.push(statusMediaData);
+                    if(requestFiles.length-1 === parseInt(x)) return ({data:mediaFiles,success:true})        
+                }
+            }
 
 
 const issueStatus = {
     create : (bdy)=> issueStatusService.create(bdy),
     media : (mediaFiles)=> issueStatusMediaService.create(mediaFiles),
-    withMedia : (bdy) =>{
+    isHaveMedia : function (bdy) {
         let files =bdy.files;
-        return issueStatus.create(bdy).then(status=>{
-            statusIssueID = status.id;
+        return this.create(bdy).then(status=>{
+            statusDataDB = status;
             let mediaFiles = initStatusMediaForDataBase(files,status);
             if(mediaFiles.success)
-               return  issueStatusMediaService.create(mediaFiles.data) //add media             
+               return this.media(mediaFiles.data) //add media             
         })
     }
 }
 
 
 
+const initRequest = {
+    isHaveFiles : (files,statusBdy,response) =>{
+        let filesIsValid = filesValidator.filesIsValid(files);
+        if(filesIsValid.success)
+            issueStatus.isHaveMedia(statusBdy)
+                .then(result=>response.json({data:[...[statusDataDB],result],success:true}))
+                .catch(err => {
+                    rollback({id:statusDataDB.id});
+                    response.json(configErrMsg(err))
+                });
+         else response.json(filesIsValid);
+    },
+    isNotHaveFiles : (statusBdy,response) =>{
+        issueStatus.create(statusBdy)
+        .then(result=>response.json({data:result,success:true}))
+        .catch(err=> response.json(configErrMsg(err)))
+    }
+
+}
+
 
 const issueStatusCtrl = {
     create : (req,res)=>{
-        let statusBdy = req.body;
-        let files = statusBdy.files;
-        let reqHaveFiles =  validation.requestIsHaveFiles(files).success;
-        let filesIsValid = validation.filesIsValid(files);
-
-        if(reqHaveFiles){
-            filesIsValid.success? 
-                issueStatus.withMedia(statusBdy)
-                    .then(result=>res.json({data:result,success:true}))
-                    .catch(err=>{
-                        rollback({id:statusIssueID});
-                        res.json(configErrMsg(err))
-                    })
-            : res.json(filesIsValid);
-        }else issueStatus.create(statusBdy)
-                .then(result=>res.json({data:result,success:true}))
-                .catch(err=> res.json(configErrMsg(err)))
-       
+        let statusBdy = req.body , files = statusBdy.files
+        , requestHaveFiles =  filesValidator.filesIsFound(files).success;
+        if(requestHaveFiles)
+            initRequest.isHaveFiles(files,statusBdy,res);
+        else  initRequest.isNotHaveFiles(statusBdy,res);
+        
     },
     view :(req,res)=>{
-        viewService.sort({},[{model:issueModel}])
+        viewService.sort({},includeOf.issue_status)
         .then(result=>res.json(configResultData(result)))
-        .catch(err=> res.json(configErrMsg(err)))
+        .catch(err=> { console.log(err);
+            res.json(configErrMsg(err))})
 
     }
 

@@ -1,12 +1,11 @@
 import {sequelize,DataTypes} from '../../config/DB.config'
 const reportModel =   sequelize.define('report',{
     id:{
-        field:'report_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     report_name:{
         field:'report_name',
@@ -34,4 +33,5 @@ const reportModel =   sequelize.define('report',{
       freezeTableName: true
     });
 
+      
 export  default reportModel;

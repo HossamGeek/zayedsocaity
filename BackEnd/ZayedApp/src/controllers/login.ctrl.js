@@ -34,6 +34,7 @@ const userIsFound = (usrData)=>{
 
 const loginCtrl = {
     view : (req,res)=>{
+        
         setLoginData(req.body);
         viewService.findAll(Where)
         .then(usrData=>res.json(userIsFound(usrData)))

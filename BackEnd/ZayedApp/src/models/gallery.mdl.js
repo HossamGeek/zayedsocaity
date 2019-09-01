@@ -1,7 +1,7 @@
 import {sequelize,DataTypes} from '../../config/DB.config';
 import userModel from './user.mdl';
 
-const galleryModel =   sequelize.define('role',{
+const galleryModel =   sequelize.define('gallery',{
     id:{
         type:DataTypes.UUID,
         primaryKey:true,
@@ -46,6 +46,7 @@ const galleryModel =   sequelize.define('role',{
       freezeTableName: true
     });
 
-    galleryModel.belongsTo(userModel, { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',constraints: false});
+    galleryModel.belongsTo(userModel, { foreignKey: 'user_id',targetKey: 'id',sourceKey:'user_id',
+    constraints: true, onDelete: 'restrict', onUpdate: 'restrict' });
 
 export  default galleryModel;

@@ -1,4 +1,4 @@
-import {sequelize,DataTypes} from '../../../config/DB.config'
+import {sequelize,DataTypes} from '../../../../config/DB.config'
 import issueModel from '../issue.mdl';
 import userModel from '../../user.mdl';
 import reportModel from '../../report.mdl';
@@ -6,12 +6,11 @@ import reportModel from '../../report.mdl';
 
 const issue_dislikeModel =   sequelize.define('issue_dislike',{
     id:{
-        field:'issue_dislike_id',
-        type:DataTypes.UUID,
-        primaryKey:true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique:true
+      type:DataTypes.UUID,
+      primaryKey:true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique:true
     },
     description:{
       field:'description',
@@ -27,21 +26,21 @@ const issue_dislikeModel =   sequelize.define('issue_dislike',{
       type: DataTypes.UUID,
       references: {
               model: issueModel,
-              key: 'issue_id',
+              key: 'id',
           },
     }, 
     user_id: {
       type: DataTypes.UUID,
       references: {
               model: userModel,
-              key: 'user_id',
+              key: 'id',
           },
     }, 
     report_id: {
       type: DataTypes.UUID,
       references: {
               model: reportModel,
-              key: 'report_id',
+              key: 'id',
           },
     }, 
     createdAt: {
@@ -58,5 +57,8 @@ const issue_dislikeModel =   sequelize.define('issue_dislike',{
       tableName: 'issue_dislike',
       freezeTableName: true
     });
+
+   
+
 
 export  default issue_dislikeModel;
