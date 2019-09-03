@@ -5,6 +5,7 @@ import IssueForm from '../controllers/issue/issue.create.form';
 import issueStatusCtrl from '../controllers/issue/status/issue.status.ctrl';
 import issueStatusMidWr from '../middleware/issue/issueStatus.midWr';
 import issueLikeCtrl from '../controllers/issue/like/issue_like.ctrl';
+import issueDisLikeCtrl from '../controllers/issue/dislike/issue_dislike.ctrl';
 
 
 const issueRouter = express.Router();
@@ -24,7 +25,12 @@ issueRouter.route('/status')
 
 
  issueRouter.route('/like')
-     .post(issueMidWr.issueLikeData,issueLikeCtrl.pullUser);
+     .post(issueMidWr.issueLikeData,issueLikeCtrl.pullUser)
+     .get(issueLikeCtrl.find);
+
+issueRouter.route('/dislike')
+     .post(issueMidWr.issueDisLikeData,issueDisLikeCtrl.pullUser)
+     .get(issueDisLikeCtrl.find);
 
 
 issueRouter.get('/usr',issueMidWr.userSearch,issueCtrl.view);

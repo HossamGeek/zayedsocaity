@@ -8,6 +8,7 @@ import issue_statusModel from "../issue/status/issue_status.mdl";
 import statusModel from "../status.mdl";
 import issue_status_mediaModel from "../issue/status/issue_status_media.mdl";
 import issue_likeModel from "../issue/like/issue_like.mdl";
+import issue_dislikeModel from "../issue/dislike/issue_dislike.mdl";
 
 
 const is_in_active = false;
@@ -28,9 +29,10 @@ const issue_status_media = {model:issue_status_mediaModel,include:[{model:galler
 const status = {model:statusModel};
 const issue_status = {model:issue_statusModel,include:[status,issue_status_media],as:'issue_status'};
 const issue_like = {model:issue_likeModel};
+const issue_dislike = {model:issue_dislikeModel};
 const issue  = (whereUser = {}) => 
     ({model:issueModel,include:[location,user(whereUser),
-     issue_like,issue_status,issue_media]});
+     issue_like,issue_dislike,issue_status,issue_media]});
 
 includeOf.issueModel = issue().include;
 includeOf.issue_status = issue_status.include;

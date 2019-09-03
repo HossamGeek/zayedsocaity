@@ -22,7 +22,8 @@ const initIssue = issueData => {
 };
 
 const searchValidator = (searchKey,searchValue)=>{
-        return  searchValue && searchValue.length  ? searchValue :{data:searchKey+' is not define',err:true }    
+        return  searchValue && searchValue.length  ?
+         searchValue :{data:searchKey+' is not define plz put it in headers',err:true }    
 }
 const customSearch = (headers) => {
     let searchData ={};

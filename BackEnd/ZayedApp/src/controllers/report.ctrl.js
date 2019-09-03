@@ -13,7 +13,7 @@ const reportCtrl = {
         .catch(err=> res.json(errMsg(err)))
     },
     view:(req,res)=> {
-        viewService.findAllService()
+        viewService.findAll()
         .then(result=>res.json({data:result,success:true}))
         .catch(err=>res.json(errMsg(err)))
     }
