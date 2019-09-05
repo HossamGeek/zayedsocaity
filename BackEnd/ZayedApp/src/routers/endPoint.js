@@ -1,14 +1,14 @@
 import { jwtVerify } from '../services/jwt.service';
 import { createErrors } from '../../config/imports.config';
-import registerRouter from './register.route';
-import loginRouter from './login.route';
-import locationRouter from './location.route';
-import roleRouter from './role.route';
-import statusRouter from './status.route';
-import reportRouter from './report.route';
-import evaluationRouter from './evaluation.route';
-import galleryRouter from './gallery.route';
-import issueRoute from './issue.route';
+import registerRouter from './register.routes';
+import loginRouter from './login.routes';
+import locationRouter from './location.routes';
+import roleRouter from './role.routes';
+import statusRouter from './status.routes';
+import reportRouter from './report.routes';
+import evaluationRouter from './evaluation.routes';
+import galleryRouter from './gallery.routes';
+import issueRoute from './issue.routes';
 
 
 
